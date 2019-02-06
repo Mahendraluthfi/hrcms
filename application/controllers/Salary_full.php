@@ -27,6 +27,11 @@ class Salary_full extends CI_Controller {
 		$this->load->view('index', $data);		
 	}
 
+	public function view($id)
+	{
+		
+	}
+
 }
 
 /* End of file Salary_full.php */

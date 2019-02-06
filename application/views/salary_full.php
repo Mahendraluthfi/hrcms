@@ -35,7 +35,7 @@
                         <td><?php echo $data->employee_name; ?></td>                      
                         <td><?php echo 'Rp. '.number_format($data->employee_salary); ?></td>
                         <td>
-                        	
+                        	<a href="<?php echo base_url('salary_full/view/'.$data->employee_id) ?>" class="btn btn-default btn-sm">View</a>
                         </td>
                       </tr>
                         <?php } ?>
