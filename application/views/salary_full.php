@@ -19,10 +19,10 @@
             <div class="card-body">
 				
               <div class="table-responsive">
-                <table class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush" id="datatable-basic">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col">No</th>                      
+                      <th width="1%">No</th>                      
                       <th scope="col">Name</th>
                       <th scope="col">Salary</th>
                       <th scope="col">Action</th>
@@ -41,8 +41,7 @@
                         <?php } ?>
                   </tbody>
                 </table>
-              </div>
-                        	
+              </div>                        
             </div>            
           </div>
         </div>

@@ -13,7 +13,7 @@
   <!-- Icons -->
   <link href="<?php echo base_url() ?>asset/extra/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="<?php echo base_url() ?>asset/extra/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css">    
+  <!-- <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css">     -->
   <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/bootstrap/css/bootstrap.css">    
   <!-- Argon CSS -->
   <link type="text/css" href="<?php echo base_url() ?>asset/extra/assets/css/argon.css?v=1.0.0" rel="stylesheet">
@@ -23,8 +23,12 @@
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/libs/select2/dist/css/select2.min.css">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="<?php echo base_url()?>asset/libs/bootstrap-daterangepicker/daterangepicker.css">    
+  <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">  
+  <!-- <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/argon.mine209.css?v=1.0.0" type="text/css">   -->
+  <script src="<?php echo base_url() ?>asset/extra/assets/vendor/jquery/dist/jquery.min.js"></script>
   
-
 <style type="text/css">
     #profile_pic {
         width: 100px;
@@ -243,9 +247,8 @@
   <!-- Akhir  Main content -->
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="<?php echo base_url() ?>asset/extra/assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url() ?>asset/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <!-- <script src="<?php echo base_url() ?>asset/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> -->
   <script src="<?php echo base_url() ?>asset/extra/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Optional JS -->
   <script src="<?php echo base_url() ?>asset/extra/assets/vendor/chart.js/dist/Chart.min.js"></script>
@@ -257,12 +260,21 @@
   <script src="<?php echo base_url(); ?>asset/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script src="<?php echo base_url(); ?>asset/libs/moment/min/moment.min.js"></script>    
   <script src="<?php echo base_url(); ?>asset/libs/bootstrap-daterangepicker/daterangepicker.js"></script>    
-
+  <script src="<?php echo base_url(); ?>asset/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <script src="<?php echo base_url() ?>asset/js/argon.mine209.js?v=1.0.0"></script>  
   <script>
 
     /****************************************
      *       Basic Table                   *
-     ****************************************/    
+     ****************************************/        
+     var DatatableBasic=function(){var e=$("#datatable-basic");e.length&&e.on("init.dt",function(){$("div.dataTables_length select").removeClass("custom-select custom-select-sm")}).DataTable({language:{paginate:{previous:"<i class='fas fa-angle-left'>",next:"<i class='fas fa-angle-right'>"}}})}();
     $('#drp').daterangepicker({                                   
       locale: {
         format: 'DD-MM-YYYY'      

@@ -22,16 +22,13 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush" id="datatable-basic">
                   <thead class="thead-light">
                     <tr>
                       <th scope="col">No</th>                      
                       <th scope="col">Name</th>
                       <th scope="col">Gender</th>
-                      <th scope="col">Position</th>
-                      <th scope="col">Birth</th>
-                      <th scope="col">Start date</th>
-                      <th scope="col">Salary</th>
+                      <th scope="col">Position</th>                                         
                       <th scope="col">Duration of Work</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
@@ -43,10 +40,7 @@
                         <td><?php echo $i++; ?></td>                        
                         <td><?php echo $data->employee_name; ?></td>
                         <td><?php echo $data->employee_gender; ?></td>
-                        <td><?php echo $data->position_name; ?></td>
-                        <td><?php echo date("F j, Y", strtotime($data->employee_birth)); ?></td>
-                        <td><?php echo date("F j, Y", strtotime($data->employee_start)); ?></td>
-                        <td><?php echo 'Rp. '.number_format($data->employee_salary); ?></td>
+                        <td><?php echo $data->position_name; ?></td>                                           
                         <td><?php echo $data->employee_duration; ?></td>
                         <td><?php 
                           if($data->employee_status == '1') echo "<span style='color: green;'> Active </span>"; 
@@ -165,7 +159,7 @@
                     <div class="form-group row">
                         <label class="control-label col-md-4 text-right">Salary</label>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                            <p class="form-control-static" id="salary"></p>
+                            <p class="form-control-static" id="gaji"></p>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -253,7 +247,7 @@
             $("#birthdate").text(data.employee_birth);                               
             $("#phone").text(data.employee_phone);                               
             $("#status").text(data.employee_status);                               
-            $("#salary").text(data.employee_salary);                               
+            $("#gaji").text(data.employee_salary);                               
             $("#overtime").text(data.employee_overtime);                               
             $("#dow").text(data.employee_duration);                               
             $("#vql").text(data.employee_start_leave+ ' until ' +data.employee_end_leave);                               

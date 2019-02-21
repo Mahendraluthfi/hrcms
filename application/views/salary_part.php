@@ -24,6 +24,7 @@
                     <tr>
                       <th scope="col">No</th>                      
                       <th scope="col">Name</th>
+                      <th scope="col">Position</th>                      
                       <th scope="col">Salary</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -32,10 +33,11 @@
                       <?php $i =1; foreach ($show as $data) { ?>
                       <tr>
                         <td><?php echo $i++; ?></td>                        
-                        <td><?php echo $data->employee_name; ?></td>                      
+                        <td><?php echo $data->employee_name; ?></td> 
+                        <td><?php echo $data->position_name; ?></td>                                            
                         <td><?php echo 'Rp. '.number_format($data->employee_salary); ?></td>
                         <td>
-                          
+                          <a href="<?php echo base_url('salary_part/view/'.$data->employee_id) ?>" class="btn btn-default btn-sm">View</a>
                         </td>
                       </tr>
                         <?php } ?>

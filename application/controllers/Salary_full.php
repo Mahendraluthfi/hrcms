@@ -27,11 +27,108 @@ class Salary_full extends CI_Controller {
 		$this->load->view('index', $data);		
 	}
 
-	public function view($id)
+	public function acak($long)
 	{
-		
+		$char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$string = '';
+		for ($i=0; $i < $long; $i++) { 			
+			$pos = rand(0, strlen($char)-1);
+			$string .= $char{$pos};
+		}
+		return $string;
 	}
 
+	public function view($id)
+	{
+		$data['show'] = $this->db->get_where('employees', array('employee_id' => $id))->row();
+		$data['result'] = $this->db->get_where('salary_detail', array('employee_id' => $id))->result();
+		for ($i=1; $i < 13; $i++) { 
+			$y = date('Y');
+			$where = array(
+				'year' => $y,
+				'month' => $i,
+				'employee_id' => $id
+			);
+			$cek = $this->db->get_where('salary_detail', $where)->num_rows();
+			if (empty($cek)) {
+				$data['get'.$i] = '<a href="'.base_url('salary_full/createsession/').$id.'/'.$i.'" class="btn btn-danger btn-sm"><i class="fas fa-donate"></i></a>';	
+			}else{
+				$data['get'.$i] = '<button type="button" class="btn btn-info btn-sm"><i class="ni ni-check-bold"></i></button>';
+			}
+			// $data['month'.$i] = "";
+		}
+		$data['year'] = date('Y');
+		$data['content'] = 'salary_view';
+		$this->load->view('index', $data);	
+	}
+
+	public function createsession($id,$month)
+	{
+		$this->db->where('id_allowance', $this->session->userdata('allowance'));
+		$this->db->delete('allowances');
+		$array = array(
+			'ses_allo',
+			'id',
+			'month'
+		);		
+		$this->session->unset_userdata($array);
+		$ses_allo = 'ID-'.$this->acak(7);
+		$array = array(
+			'allowance' => $ses_allo,
+			'id' => $id,
+			'month' => $month
+		);		
+		$this->session->set_userdata( $array );
+		$gidp = $this->db->get_where('employees', array('employee_id' => $id ))->row();
+		$row = $this->salarymodel->get_allo_id($gidp->employee_position);
+		foreach ($row->result() as $key) {
+			$this->db->insert('allowances', array(
+				'id_allowance' => $ses_allo,
+				'allowance_name' => $key->allowance_name,
+				'nominal' => $key->allowance_nominal				
+			));
+		}
+		redirect('salary_full/generate','refresh');
+	}
+
+	public function generate()
+	{
+		$id = $this->session->userdata('id');
+		$month = $this->session->userdata('month');
+		// $data['tot_allo'] = $this->salarymodel->tot_allo($this->session->userdata('allowance'))->row();
+		$data['show'] = $this->db->get_where('employees', array('employee_id' => $id))->row();			
+		$data['month'] = $month;			
+		$data['content'] = 'salary_generate';
+		$this->load->view('index', $data);			
+	}
+
+	public function get()
+	{
+		$data = $this->db->get_where('allowances', array('id_allowance' => $this->session->userdata('allowance')))->result();
+		echo json_encode($data);
+	}
+
+	public function get_allowance()
+	{
+		$data = $this->salarymodel->tot_allo($this->session->userdata('allowance'))->row();		
+		echo json_encode($data);
+	}
+
+	function add_allowance(){		
+		$insert = array(
+			'id_allowance' => $this->session->userdata('allowance'),		
+			'allowance_name' => $this->input->post('allowance'),			
+			'nominal' => $this->input->post('nominal')
+		);		
+		$data = $this->db->insert('allowances', $insert);
+		echo json_encode($data);
+	}
+
+	function delete(){
+		$id=$this->input->post('id');		
+		$data = $this->salarymodel->delete($id);
+		echo json_encode($data);
+	}
 }
 
 /* End of file Salary_full.php */

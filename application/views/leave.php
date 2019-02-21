@@ -19,7 +19,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush" id="datatable-basic">
                   <thead class="thead-light">
                   	<tr>
                         <th>No</th>

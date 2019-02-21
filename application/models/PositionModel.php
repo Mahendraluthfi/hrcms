@@ -5,8 +5,25 @@ class PositionModel extends CI_Model
 {
 	public function getAllData()
 	{
-		$allData = $this->db->get('positions');
+		$allData = $this->db->get_where('positions', array('position_status' => '1'));
 		return $allData->result();
+	}
+
+	public function get_done($id)
+	{
+		$this->db->select('*, allowance_allocated.id as id_allo');
+		$this->db->from('allowance_allocated');
+		$this->db->join('positions', 'positions.position_id = allowance_allocated.position_id');
+		$this->db->join('allowances_master', 'allowances_master.id = allowance_allocated.allowance_id');
+		$this->db->where('allowance_allocated.position_id', $id);
+		$db = $this->db->get();
+		return $db;
+	}
+
+	public function get_check($id)
+	{
+		$db = $this->db->query("SELECT * FROM allowances_master where id not in (select allowance_id from allowance_allocated where position_id='$id')");
+		return $db->result();
 	}
 
 	public function insertData($data)
