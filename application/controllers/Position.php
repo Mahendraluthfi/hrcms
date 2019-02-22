@@ -89,6 +89,18 @@ class Position extends CI_Controller {
 		redirect('position/set_allowance/'.$pid,'refresh');		
 	}
 
+	public function tes()
+	{
+		$hari_ini = date("Y-m-d");
+		$tgl_pertama = date('Y-m-01', strtotime($hari_ini));
+		$tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
+		echo "Tanggal Hari ini".$hari_ini;
+		echo "<br/>";
+		echo "Tanggal Pertama di Bulan :".$tgl_pertama;
+		echo "<br/>";
+		echo "Tanggal Akhir di Bulan ini ".$tgl_terakhir;
+	}
+
 
 }
 

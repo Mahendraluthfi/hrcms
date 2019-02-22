@@ -12,14 +12,14 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-0">Salary Full Time</h3>
+                  <h3 class="mb-0">Part Time Salary</h3>
                 </div>                
               </div>
             </div>
             <div class="card-body">
         
               <div class="table-responsive">
-                <table class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush" id="datatable-basic">
                   <thead class="thead-light">
                     <tr>
                       <th scope="col">No</th>                      

@@ -45,9 +45,17 @@
 		        					</div>
 		        				</div>
 		        				<div class="form-group">
-		        					<label for="">Tolerance Delay</label>
-		        					<input type="number" class="form-control" name="tol" min="0" placeholder="minutes" value="<?php echo $wh->tolerance; ?>">
-		        				</div>
+                      <label for="">Tolerance (minute)</label>
+                      <input type="number" class="form-control" name="tol" min="0" placeholder="minutes" value="<?php echo $wh->tolerance; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Late Calculation (minute)</label>
+                      <input type="number" class="form-control" name="cal" min="0" placeholder="minutes" value="<?php echo $wh->calculation; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Late Charge</label>
+                      <input type="number" class="form-control" name="charge" min="0" placeholder="nominal" value="<?php echo $wh->charge; ?>">
+                    </div>
 		        				<div class="col-sm-10 col-sm-offset-2">
 		        					<button type="submit" class="btn btn-primary">Save</button>
 		        				</div>

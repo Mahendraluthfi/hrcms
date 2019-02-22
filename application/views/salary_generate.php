@@ -22,29 +22,33 @@
             </div>
             <div class="card-body">
             	<form action="" method="POST" class="form-horizontal" role="form"> 
-                    <div class="form-group row">
-                    	<label class="col-sm-3 text-right text-primary control-label col-form-label">Employee Name</label>
-                		<label class="col-sm-3 control-label col-form-label"><?php echo $show->employee_name ?></label>
-          					</div>			            								
-          					<div class="form-group row">
-                    	<label class="col-sm-3 text-right text-primary control-label col-form-label">Month</label>
-                  		<label class="col-sm-3 control-label col-form-label"><?php echo date('M', strtotime('1970-'.$month.'-01')).' '.date('Y') ?></label>
-          					</div>			            			
+                  <div class="form-group row">
+                  	<label class="col-sm-3 text-right text-primary control-label col-form-label">Employee Name</label>
+              		<label class="col-sm-3 control-label col-form-label"><?php echo $show->employee_name ?></label>
+        					</div>			            								
+        					<div class="form-group row">
+                  	<label class="col-sm-3 text-right text-primary control-label col-form-label">Month</label>
+                		<label class="col-sm-3 control-label col-form-label"><?php echo date('M', strtotime('1970-'.$month.'-01')).' '.date('Y') ?></label>
+        					</div>			            			
             	</form>
               	<legend>Detail Salary</legend>
               	<div class="row">
-    				<div class="col-5">
+    				  <div class="col-5">
 			        	<form action="" method="POST" class="form-horizontal" role="form"> 
 			                <div class="form-group row">
 			                	  <label class="col-sm-6 text-right text-primary control-label col-form-label">Salary</label>
-			            	    	<label class="col-sm-6 control-label col-form-label text-right"><?php echo "IDR ".number_format($show->employee_salary) ?></label>                		
-        							</div>			            			
-        							<div class="form-group row">
-  			                	<label class="col-sm-6 text-right text-primary control-label col-form-label">Deducted Leave</label>
-        			            		
+			            	    	<label class="col-sm-6 control-label col-form-label text-right"><?php echo "IDR ".number_format($show->employee_salary) ?></label>      
+                          <input type="hidden" name="es" value="<?php echo $show->employee_salary ?>">
+                      </div>                        
+                      <div class="form-group row">
+                          <label class="col-sm-6 text-right text-primary control-label col-form-label">Deducted Leave</label>
+                          <label class="col-sm-6 text-right control-label col-form-label"><?php echo "- IDR ".number_format($leave_deducted) ?></label>
+                          <input type="hidden" name="ld" value="<?php echo $leave_deducted ?>">         	
         							</div>
         							<div class="form-group row">
   			                	<label class="col-sm-6 text-right text-primary control-label col-form-label">Deducted Attendance</label>
+                           <label class="col-sm-6 text-right control-label col-form-label"><?php echo "- IDR ".number_format($attendance_deducted) ?></label>
+                          <input type="hidden" name="ad" value="<?php echo $attendance_deducted ?>">
         							</div>			          
         							<div class="form-group row">
                         	<label class="col-sm-6 text-right text-primary control-label col-form-label">Total Allowance</label>
@@ -53,12 +57,13 @@
         							</div>	
 							        <div class="form-group row">
                           <label class="col-sm-6 text-right text-primary control-label col-form-label">Total Salary</label>
+                          <label class="col-sm-6 text-right text-primary control-label col-form-label total-salary"></label>
                       </div>                
 			        	</form>
 			        </div>
 			        <div class="col-7">	                  
 			          <div class="table-responsive">
-                  <h4>Detail Allowance</h4>
+                  <h4>Allowance Detail</h4>
 			            <table class="table align-items-center table-flush">
 			              <thead class="thead-light">
 			                <tr>
@@ -173,19 +178,22 @@
             type: "GET",
             dataType: "JSON",
             success: function(data){
-                // var bilangan1 = data.total;
-                // var num_string1 = bilangan1.toString(),
-                // sisa1  = num_string1.length % 3,
-                // rupiah1  = num_string1.substr(0, sisa1),
-                // ribuan1  = num_string1.substr(sisa1).match(/\d{3}/g);
-                // if (ribuan1) {
-                //   sep1 = sisa1 ? ',' : '';
-                //   rupiah1 += sep1 + ribuan1.join(',');
-                // }   
-                var number = data.total;
+                
+                var es = $('[name="es"]').val();
+                var ld = $('[name="ld"]').val();
+                if (data.total == null) {
+                    // console.log('kosong'); 
+                    var number = 0;                    
+                }else{
+                    // console.log('ada');                
+                    var number = data.total;
+                }
+                // console.log(data.total);
+                var total_salary = parseInt(es) - parseInt(ld) + parseInt(number);
                 var x = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'IDR' }).format(number);
-                $('.total').text(x);  
-                // console.log(rupiah1);
+                var z = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'IDR' }).format(total_salary);
+                $('.total').text(x);
+                $('.total-salary').text(z);                
 
             },
             error: function (jqXHR, textStatus, errorThrown){
@@ -194,9 +202,7 @@
         });            
   }
 
-    // function save(){
    
-    //   }    
   $('#btn_simpan').on('click',function(){            
           var allowance = $('[name="allowance"]').val();
           var nominal = $('[name="nominal"]').val();  

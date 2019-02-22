@@ -74,7 +74,9 @@ class Att_setting extends CI_Controller {
 		$data = array(
 			'start_hours' => $sh,
 			'end_hours' => $eh,
-			'tolerance' => $this->input->post('tol')
+			'tolerance' => $this->input->post('tol'),
+			'calculation' => $this->input->post('cal'),
+			'charge' => $this->input->post('charge')
 		);
 
 		$this->db->where('attendance_name', 'Full Time');
@@ -90,7 +92,9 @@ class Att_setting extends CI_Controller {
 		$data = array(
 			'start_hours' => $sh,
 			'end_hours' => $eh,
-			'tolerance' => $this->input->post('tol')
+			'tolerance' => $this->input->post('tol'),
+			'calculation' => $this->input->post('cal'),
+			'charge' => $this->input->post('charge')
 		);
 
 		$this->db->where('attendance_name', 'Part Time');

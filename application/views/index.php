@@ -313,6 +313,8 @@
             }else{
                 $('#diff').text(' / '+diff);                
             }
+        }else{
+            $('#diff').text(' / '+diff);                          
         }
     });
     $('#zero_config').DataTable();

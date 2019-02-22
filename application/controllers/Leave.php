@@ -52,13 +52,18 @@ class Leave extends CI_Controller {
 			$ld = $key->leave_days;
 			$id_e = $key->leave_employee;
 		}
-
-		$this->db->query("UPDATE employees SET employee_leave_rem = employee_leave_rem - '$ld' WHERE employee_id='$id_e'");			
+		$cek = $this->db->get_where('employees', array('employee_id' => $id_e))->row();
+		if ($cek->employee_leave_rem > 0) {
+			$leave_deducted =  $ld - $cek->employee_leave_rem;
+		}else{
+			$leave_deducted = $ld;				
+		}	
+		$data['leave_deducted'] = $leave_deducted;
 		$data['leave_status'] = 'APPROVED';
 		$data['action_timestamp'] = date('Y-m-d H:i:s');
 		$id = $id;		
 		$query = $this->LeaveModel->updateData2($data, $id);
-
+		$this->db->query("UPDATE employees SET employee_leave_rem = employee_leave_rem - '$ld' WHERE employee_id='$id_e'");		
 		if($query) {
 			redirect('leave');	
 		}

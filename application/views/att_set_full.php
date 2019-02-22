@@ -15,7 +15,7 @@
                   <h3 class="mb-0">Setting Full Time</h3>                
                 </div>
                 <div class="col-4 text-right">
-                  <a href="<?php echo base_url('att_setting'); ?>" class="btn btn-primary"><i class="ni ni-bold-left"></i> Back</a>
+                  <a href="<?php echo base_url('att_setting'); ?>" class="btn btn-primary btn-sm"><i class="ni ni-bold-left"></i> Back</a>
                 </div>
               </div>
             </div>
@@ -45,11 +45,19 @@
 		        					</div>
 		        				</div>
 		        				<div class="form-group">
-		        					<label for="">Tolerance Delay</label>
+		        					<label for="">Tolerance (minute)</label>
 		        					<input type="number" class="form-control" name="tol" min="0" placeholder="minutes" value="<?php echo $wh->tolerance; ?>">
 		        				</div>
+                    <div class="form-group">
+                      <label for="">Late Calculation (minute)</label>
+                      <input type="number" class="form-control" name="cal" min="0" placeholder="minutes" value="<?php echo $wh->calculation; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Late Charge</label>
+                      <input type="number" class="form-control" name="charge" min="0" placeholder="nominal" value="<?php echo $wh->charge; ?>">
+                    </div>
 		        				<div class="col-sm-10 col-sm-offset-2">
-		        					<button type="submit" class="btn btn-primary">Save</button>
+		        					<button type="submit" class="btn btn-primary btn-sm">Save</button>
 		        				</div>
 		        			</div>
 		            	</form>            			            			
@@ -60,14 +68,14 @@
     						  <?php foreach ($wd as $key) { ?>
     						  <input type="checkbox" name="cb[<?php echo $key->id ?>]" <?php if ($key->status == "1") { echo "checked=''";} ?> value="<?php echo $key->id ?>"> <?php echo $key->day ?><br>
     						  <?php } ?>						   <p></p>
-    							<button type="submit" class="btn btn-primary">Save</button>
+    							<button type="submit" class="btn btn-primary btn-sm">Save</button>
     						  <?php echo form_close(); ?>						
                 </div>
             	</div>
                <div class="row">
                   <div class="col">
                     <div class="pull-right">
-                      <button type="button" onclick="add()" class="btn btn-default">Add</button>
+                      <button type="button" onclick="add()" class="btn btn-default btn-sm">Add</button>
                     </div>
                     <div>
                       <h4>Set Holiday</h4>

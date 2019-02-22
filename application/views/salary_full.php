@@ -12,7 +12,7 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-0">Salary Full Time</h3>
+                  <h3 class="mb-0">Full Time Salary </h3>
                 </div>                
               </div>
             </div>
