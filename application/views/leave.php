@@ -159,17 +159,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('leave/leave_rejected'); ?>" method="post">
-                    
+                <form action="<?php echo base_url('leave/leave_rejected'); ?>" method="post">                
                     <div class="form-group row">
                         <label for="position_name" class="col-sm-3 text-right control-label col-form-label">Reason</label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="detail_leave_reason" name="rejection_reason"></textarea>
                         </div>
                     </div>
-
-                    <input type="hidden" id="reject_id_leave" name="id" value="">                    
-               
+                    <input type="hidden" id="reject_id_leave" name="id" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

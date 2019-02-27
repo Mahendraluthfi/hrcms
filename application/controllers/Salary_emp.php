@@ -28,6 +28,11 @@ class Salary_emp extends CI_Controller {
 		$this->load->view('index', $data);			
 	}
 
+	public function get_detail($id){
+		$data = $this->db->get_where('allowances', array('id_allowance' => $id))->result();
+		echo json_encode($data);
+	}
+
 }
 
 /* End of file Salary_emp.php */

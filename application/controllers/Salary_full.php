@@ -40,6 +40,14 @@ class Salary_full extends CI_Controller {
 
 	public function view($id)
 	{
+		$this->db->where('id_allowance', $this->session->userdata('allowance'));
+		$this->db->delete('allowances');
+		$array = array(
+			'ses_allo',
+			'id',
+			'month'
+		);		
+		$this->session->unset_userdata($array);
 		$data['show'] = $this->db->get_where('employees', array('employee_id' => $id))->row();
 		$data['result'] = $this->db->get_where('salary_detail', array('employee_id' => $id))->result();
 		for ($i=1; $i < 13; $i++) { 
@@ -54,8 +62,7 @@ class Salary_full extends CI_Controller {
 				$data['get'.$i] = '<a href="'.base_url('salary_full/createsession/').$id.'/'.$i.'" class="btn btn-danger btn-sm">Not Paid</a>';	
 			}else{
 				$data['get'.$i] = '<button type="button" class="btn btn-success btn-sm">Paid</button>';
-			}
-			// $data['month'.$i] = "";
+			}			
 		}
 		$data['year'] = date('Y');
 		$data['content'] = 'salary_view';
@@ -67,7 +74,7 @@ class Salary_full extends CI_Controller {
 		$this->db->where('id_allowance', $this->session->userdata('allowance'));
 		$this->db->delete('allowances');
 		$array = array(
-			'ses_allo',
+			'allowance',
 			'id',
 			'month'
 		);		
@@ -163,6 +170,11 @@ class Salary_full extends CI_Controller {
 		$data = $this->db->get_where('allowances', array('id_allowance' => $this->session->userdata('allowance')))->result();
 		echo json_encode($data);
 	}
+	
+	public function get_detail($id){
+		$data = $this->db->get_where('allowances', array('id_allowance' => $id))->result();
+		echo json_encode($data);
+	}
 
 	public function get_allowance()
 	{
@@ -185,6 +197,31 @@ class Salary_full extends CI_Controller {
 		$data = $this->salarymodel->delete($id);
 		echo json_encode($data);
 	}
+
+	function submit_salary(){
+		$insert = array(
+			'employee_id' => $this->session->userdata('id'),
+			'id_allowance' => $this->session->userdata('allowance'),
+			'year' => date('Y'),
+			'month' => $this->session->userdata('month'),
+			'date_release' => date('Y-m-d'),
+			'salary' => $this->input->post('salary'),
+			'deduct_attendance' => $this->input->post('ad'),
+			'deduct_leave' => $this->input->post('ld'),
+			'total_allowance' => $this->input->post('ta'),
+			'total_salary' => $this->input->post('ts') 						
+		);
+		$data = $this->db->insert('salary_detail', $insert);
+		$array = array(
+			'allowance',
+			'id',
+			'month'
+		);		
+		$this->session->unset_userdata($array);
+		echo json_encode($data);
+	}
+	
+
 }
 
 /* End of file Salary_full.php */

@@ -275,6 +275,7 @@
      *       Basic Table                   *
      ****************************************/        
      var DatatableBasic=function(){var e=$("#datatable-basic");e.length&&e.on("init.dt",function(){$("div.dataTables_length select").removeClass("custom-select custom-select-sm")}).DataTable({language:{paginate:{previous:"<i class='fas fa-angle-left'>",next:"<i class='fas fa-angle-right'>"}}})}();
+     var DatatableBasic2=function(){var e=$("#datatable-basic2");e.length&&e.on("init.dt",function(){$("div.dataTables_length select").removeClass("custom-select custom-select-sm")}).DataTable({language:{paginate:{previous:"<i class='fas fa-angle-left'>",next:"<i class='fas fa-angle-right'>"}}})}();
     $('#drp').daterangepicker({                                   
       locale: {
         format: 'DD-MM-YYYY'      

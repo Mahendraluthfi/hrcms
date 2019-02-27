@@ -31,7 +31,7 @@
                 		<label class="col-sm-3 control-label col-form-label"><?php echo date('M', strtotime('1970-'.$month.'-01')).' '.date('Y') ?></label>
         					</div>			            			
             	</form>
-              	<legend>Detail Salary</legend>
+              	<legend>Salary Detail</legend>
               	<div class="row">
     				  <div class="col-5">
 			        	<form action="" method="POST" class="form-horizontal" role="form"> 
@@ -53,11 +53,13 @@
         							<div class="form-group row">
                         	<label class="col-sm-6 text-right text-primary control-label col-form-label">Total Allowance</label>
                       		<label class="col-sm-1 control-label col-form-label"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></button></label>                				
-                          <label class="col-sm-5 control-label col-form-label text-right total"></label>                			
+                          <label class="col-sm-5 control-label col-form-label text-right total"></label>   
+                          <input type="hidden" name="total-allowance">             			
         							</div>	
 							        <div class="form-group row">
                           <label class="col-sm-6 text-right text-primary control-label col-form-label">Total Salary</label>
-                          <label class="col-sm-6 text-right text-primary control-label col-form-label total-salary"></label>
+                          <label class="col-sm-6 text-right text-red control-label col-form-label total-salary"></label>
+                          <input type="hidden" name="total-salary">
                       </div>                
 			        	</form>
 			        </div>
@@ -80,6 +82,7 @@
 			          </div>            
 			        </div>			        
 			    </div>
+          <button type="button" class="btn btn-default submit-salary"><i class="ni ni-send"></i> Submit Salary</button>
             	
             </div>            
           </div>
@@ -193,7 +196,9 @@
                 var x = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'IDR' }).format(number);
                 var z = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'IDR' }).format(total_salary);
                 $('.total').text(x);
+                $('[name="total-allowance"]').val(number);
                 $('.total-salary').text(z);                
+                $('[name="total-salary"]').val(total_salary);                
 
             },
             error: function (jqXHR, textStatus, errorThrown){
@@ -227,7 +232,7 @@
   });
 
    $('#show_data').on('click','.item_hapus',function(){
-            var id=$(this).attr('data');            
+            var id = $(this).attr('data');            
             $.ajax({
             type : "POST",
             url  : "<?php echo base_url('index.php/salary_full/delete')?>",
@@ -241,4 +246,35 @@
             // alert('OK');
             });
   }); 
+
+  $('.submit-salary').on('click', function(){
+      // alert('OKE')
+      var salary = $('[name="es"]').val();      
+      var ld = $('[name="ld"]').val();
+      var ad = $('[name="ad"]').val();
+      var ta = $('[name="total-allowance"]').val();
+      var ts = $('[name="total-salary"]').val();      
+      var conf = confirm('Are You Sure ?');
+      // console.log(salary);
+      // console.log(ld);
+      // console.log(ad);
+      // console.log(ta);
+      // console.log(ts);
+      if(conf == true){
+        $.ajax({
+          type : "POST",
+          url  : "<?php echo base_url('index.php/salary_full/submit_salary')?>",
+          dataType : "JSON",
+          data : {salary:salary , ld:ld, ad:ad, ta:ta, ts:ts},
+          success: function(data)
+          {                     
+              window.location = '<?php echo base_url('salary_full') ?>';
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+              alert('Error adding / update data');
+          }      
+        }); 
+      }
+  });
     </script>
