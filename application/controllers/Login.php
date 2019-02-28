@@ -15,9 +15,10 @@ class Login extends CI_Controller {
 
 	public function submit()
 	{
-		$username = $this->input->post('username');
+        $username = $this->input->post('username');
         $password = sha1($this->input->post('password'));        
-        $cek = $this->db->get_where('users', array('username' => $username,'password' => $password));
+		$role = $this->input->post('role');
+        $cek = $this->db->get_where('users', array('username' => $username,'password' => $password,'role' => $role));
         if (!empty($cek->num_rows())) {
            
             $get = $cek->result();

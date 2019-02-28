@@ -95,7 +95,7 @@ class Sick_emp extends CI_Controller {
 			'leave_timestamp' => date('Y-m-d H:i:s')			
 		);
 		$this->db->insert('leaves', $data);
-		redirect('leave_emp','refresh');
+		redirect('sick_emp','refresh');
 	}
 
 	public function cancel($id)

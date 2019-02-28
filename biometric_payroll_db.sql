@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 23, 2019 at 04:57 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 5.6.38
+-- Host: localhost:3306
+-- Generation Time: Feb 28, 2019 at 01:14 PM
+-- Server version: 5.7.25-0ubuntu0.18.04.2
+-- PHP Version: 5.6.40-1+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -29,17 +27,68 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `allowances` (
-  `allowance_id` int(11) NOT NULL,
-  `allowance_name` varchar(75) NOT NULL,
-  `allowance_status` tinyint(1) NOT NULL
+  `id` int(11) NOT NULL,
+  `id_allowance` varchar(12) NOT NULL,
+  `allowance_name` varchar(25) NOT NULL,
+  `nominal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `allowances`
 --
 
-INSERT INTO `allowances` (`allowance_id`, `allowance_name`, `allowance_status`) VALUES
-(3, 'Holiday Allowances', 0);
+INSERT INTO `allowances` (`id`, `id_allowance`, `allowance_name`, `nominal`) VALUES
+(1, 'ID-DB0P95L', 'BPJS', 68000),
+(6, 'ID-5TU2AV3', 'BPJS', 25500),
+(7, 'ID-5TU2AV3', 'Fuel', 20000),
+(8, 'ID-5TU2AV3', 'Communication', 24500),
+(9, 'ID-5TU2AV3', 'Family', 90000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `allowances_master`
+--
+
+CREATE TABLE `allowances_master` (
+  `id` int(11) NOT NULL,
+  `allowance_name` varchar(50) NOT NULL,
+  `allowance_nominal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `allowances_master`
+--
+
+INSERT INTO `allowances_master` (`id`, `allowance_name`, `allowance_nominal`) VALUES
+(1, 'BPJS', 25500),
+(2, 'Fuel', 20000),
+(3, 'Communication', 24500),
+(4, 'Family', 90000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `allowance_allocated`
+--
+
+CREATE TABLE `allowance_allocated` (
+  `id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `allowance_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `allowance_allocated`
+--
+
+INSERT INTO `allowance_allocated` (`id`, `position_id`, `allowance_id`) VALUES
+(5, 3, 1),
+(6, 3, 2),
+(11, 7, 1),
+(12, 7, 2),
+(13, 7, 3),
+(14, 7, 4);
 
 -- --------------------------------------------------------
 
@@ -52,62 +101,40 @@ CREATE TABLE `attendances` (
   `attendance_employee` int(11) NOT NULL,
   `attendance_in` varchar(50) NOT NULL,
   `attendance_out` varchar(50) DEFAULT '00/00/00 00:00:00',
-  `attendance_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `attendance_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `late_charge` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `attendances`
 --
 
-INSERT INTO `attendances` (`attendance_id`, `attendance_employee`, `attendance_in`, `attendance_out`, `attendance_timestamp`) VALUES
-(1, 1, '11/14/2018 10:39 AM', '11/14/2018 10:39 AM', '2018-11-14 03:39:54'),
-(2, 2, '11/14/2018 10:39 AM', '11/14/2018 10:40 AM', '2018-11-14 03:40:11'),
-(3, 3, '11/14/2018 10:38 AM', '11/14/2018 10:39 AM', '2018-11-14 03:39:46'),
-(4, 4, '11/14/2018 10:41 AM', '11/14/2018 10:42 AM', '2018-11-14 03:42:11'),
-(5, 5, '11/26/2018 11:13 AM', '11/26/2018 2:48 PM', '2018-11-27 02:37:17');
+INSERT INTO `attendances` (`attendance_id`, `attendance_employee`, `attendance_in`, `attendance_out`, `attendance_timestamp`, `late_charge`) VALUES
+(1, 1, '11/14/2018 10:39 AM', '11/14/2018 10:39 AM', '2018-11-14 03:39:54', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendances_full`
+-- Table structure for table `attendances_setting`
 --
 
-CREATE TABLE `attendances_full` (
+CREATE TABLE `attendances_setting` (
   `attendance_id` int(11) NOT NULL,
-  `attendance_employee` varchar(20) NOT NULL,
-  `attendance_in` varchar(50) NOT NULL,
-  `attendance_out` varchar(50) NOT NULL,
-  `attendance_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `attendance_name` varchar(30) NOT NULL,
+  `start_hours` time NOT NULL,
+  `end_hours` time NOT NULL,
+  `tolerance` int(11) NOT NULL,
+  `calculation` int(11) NOT NULL,
+  `charge` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `attendances_full`
+-- Dumping data for table `attendances_setting`
 --
 
-INSERT INTO `attendances_full` (`attendance_id`, `attendance_employee`, `attendance_in`, `attendance_out`, `attendance_timestamp`) VALUES
-(5, '1', '12/17/2018 2:49 PM', '', '2018-12-17 07:49:39');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `attendances_part`
---
-
-CREATE TABLE `attendances_part` (
-  `attendance_id` int(11) NOT NULL,
-  `attendance_employee` varchar(20) NOT NULL,
-  `attendance_in` varchar(50) NOT NULL,
-  `attendance_out` varchar(50) NOT NULL,
-  `attendance_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `attendances_part`
---
-
-INSERT INTO `attendances_part` (`attendance_id`, `attendance_employee`, `attendance_in`, `attendance_out`, `attendance_timestamp`) VALUES
-(3, 'A3', '12/17/2018 11:02 AM', '12/17/2018 11:05 AM', '2018-12-17 04:05:20'),
-(4, '5', '12/17/2018 2:49 PM', '', '2018-12-17 07:49:27');
+INSERT INTO `attendances_setting` (`attendance_id`, `attendance_name`, `start_hours`, `end_hours`, `tolerance`, `calculation`, `charge`) VALUES
+(1, 'Full Time', '08:00:00', '17:00:00', 5, 5, 2000),
+(2, 'Part Time', '09:00:00', '18:00:00', 10, 5, 2000);
 
 -- --------------------------------------------------------
 
@@ -201,10 +228,28 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `employee_name`, `employee_username`, `employee_password`, `employee_picture`, `employee_position`, `employee_salary`, `employee_address`, `employee_idcard`, `employee_certificate`, `employee_birth`, `employee_gender`, `employee_start`, `employee_phone`, `employee_duration`, `employee_status`, `employee_timestamp`, `employee_start_leave`, `employee_end_leave`, `employee_start_off`, `employee_end_off`, `employee_start_sick`, `employee_end_sick`, `employee_leave`, `employee_off`, `employee_sick`, `employee_leave_rem`, `employee_off_rem`, `employee_sick_rem`, `employee_overtime`) VALUES
-(1, 'Andik2', 'andik', 'af0b3b52ec598673aeb96627ff8d024e670496da', 'files/employee_pictures/31dfea34977d9450906152c7eb357d00.jpg', 3, 8889, 'ungaran2', 'files/employee_pictures/00acc4f9183db8d130dbc0149f7b897f.jpg', 'files/employee_pictures/09e61a66c66ad7890f83be8aae6c4889.jpg', '05/09/1990', 'Man', '11/13/2018', 5456560, 'Full Time', 1, '2019-01-08 04:36:07', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', 8, 0, 0, 0, 0, 0, 0),
-(2, 'aaa', 'a', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'files/employee_pictures/3c104bb7209a8b3464d59b5908b427bc.jpg', 4, 213123213, 'bekonang', 'files/employee_pictures/1b33af94073491883434d76a812b654a.jpg', NULL, '2018-08-09', 'Women', '10/31/2018', 888, 'Full Time', 0, '2019-01-11 10:10:06', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, 0),
-(3, 'Jhony andrean', 'joni', '91010ab2791f95fcd50d52d8b32f5c756438c411', 'files/employee_pictures/3f71408ffccb266281320a62d2ef1d82.jpg', 6, 2312312, 'bubakan', 'files/employee_pictures/c84beca33b06c7938aff3a754de059ed.jpg', 'files/employee_pictures/8ba747c0f614518b9fd9400e2a84d4ad.jpg', '06/18/1990', 'Man', '09/11/2018', 990890, 'Part Time', 1, '2018-12-17 06:36:15', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, 0),
-(12, 'Naka', 'naka', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 7, 123, 'Semarang', NULL, NULL, '08/26/1994', 'Man', '01/04/2019', 0, 'Full Time', 1, '2019-01-15 06:19:50', '2019-01-07', '2019-02-28', '2019-01-07', '2019-05-25', '2019-01-07', '2019-04-30', 12, 3, 4, -2, 3, 4, 0);
+(1, 'Andik2', 'andik', 'af0b3b52ec598673aeb96627ff8d024e670496da', 'files/employee_pictures/31dfea34977d9450906152c7eb357d00.jpg', 3, 2700000, 'ungaran2', 'files/employee_pictures/00acc4f9183db8d130dbc0149f7b897f.jpg', 'files/employee_pictures/09e61a66c66ad7890f83be8aae6c4889.jpg', '05/09/1990', 'Man', '11/13/2018', 5456560, 'Full Time', 1, '2019-02-27 10:02:52', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', 8, 0, 0, 8, 0, 0, 0),
+(12, 'Naka', 'naka', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 7, 2500000, 'Semarang', NULL, NULL, '08/26/1994', 'Man', '01/04/2019', 0, 'Full Time', 1, '2019-02-22 08:00:20', '2019-01-07', '2019-02-28', '2019-01-07', '2019-05-25', '2019-01-07', '2019-04-30', 7, 3, 4, -2, 1, 4, 0),
+(16, 'Joni', 'joni123', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 5, 120000, 'Semarang', NULL, NULL, '02/10/2009', 'Man', '01/04/2019', 851212, 'Part Time', 1, '2019-02-04 04:35:41', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-28', 1, 2, 3, 1, 2, 3, 1200);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `holiday`
+--
+
+CREATE TABLE `holiday` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `information` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `holiday`
+--
+
+INSERT INTO `holiday` (`id`, `date`, `information`) VALUES
+(2, '2019-02-05', 'Chinese New Year');
 
 -- --------------------------------------------------------
 
@@ -224,18 +269,18 @@ CREATE TABLE `leaves` (
   `leave_status` enum('PENDING','CANCELED','EXPIRED','REJECTED','APPROVED') NOT NULL,
   `leave_attachment` text,
   `leave_timestamp` datetime NOT NULL,
-  `action_timestamp` datetime NOT NULL
+  `action_timestamp` datetime NOT NULL,
+  `leave_deducted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `leaves`
 --
 
-INSERT INTO `leaves` (`leave_id`, `leave_employee`, `leave_category`, `leave_message`, `leave_reply_message`, `leave_date_start`, `leave_date_end`, `leave_days`, `leave_status`, `leave_attachment`, `leave_timestamp`, `action_timestamp`) VALUES
-(6, 12, '3', 'Sick', 'OKE', '2019-01-08', '2019-01-09', 2, 'REJECTED', 'IMG-10163557.png', '2019-01-10 16:35:57', '2019-01-11 17:54:55'),
-(7, 12, '1', 'Okey', '', '2019-01-14', '2019-01-16', 3, 'APPROVED', '', '2019-01-11 11:12:24', '2019-01-11 17:52:36'),
-(9, 12, '1', 'A', '', '2019-01-15', '2019-01-17', 3, 'APPROVED', '', '2019-01-14 16:21:24', '2019-01-14 17:17:49'),
-(10, 12, '1', 'Oke', '', '2019-01-15', '2019-01-25', 11, 'APPROVED', '', '2019-01-15 13:19:27', '2019-01-15 13:19:50');
+INSERT INTO `leaves` (`leave_id`, `leave_employee`, `leave_category`, `leave_message`, `leave_reply_message`, `leave_date_start`, `leave_date_end`, `leave_days`, `leave_status`, `leave_attachment`, `leave_timestamp`, `action_timestamp`, `leave_deducted`) VALUES
+(4, 12, '1', '', '', '2019-02-25', '2019-02-28', 4, 'APPROVED', '', '2019-02-22 15:00:06', '2019-02-22 15:00:20', 2),
+(5, 16, '2', 'Family Interest', '', '2019-02-27', '2019-02-27', 1, 'PENDING', '', '2019-02-27 16:59:30', '0000-00-00 00:00:00', 0),
+(6, 16, '3', 'Headache', '', '2019-03-01', '2019-03-01', 1, 'PENDING', '', '2019-02-27 17:00:52', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -356,7 +401,8 @@ INSERT INTO `positions` (`position_id`, `position_name`, `position_priority`, `p
 (7, 'Branch Manager', 2, 1),
 (10, 'Sales', 4, 1),
 (11, 'Secretary', 3, 1),
-(12, 'Administrator', 3, 1);
+(12, 'Administrator', 3, 1),
+(14, 'Admin', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -408,7 +454,64 @@ INSERT INTO `privilage` (`privilage_id`, `user_id`, `modul_id`) VALUES
 (31, 12, 31),
 (32, 12, 32),
 (33, 12, 33),
-(34, 12, 34);
+(34, 12, 34),
+(36, 16, 26),
+(37, 16, 27),
+(38, 16, 28),
+(39, 16, 29),
+(40, 16, 30),
+(41, 16, 31),
+(42, 16, 32),
+(43, 16, 33),
+(44, 16, 34);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reimbursment`
+--
+
+CREATE TABLE `reimbursment` (
+  `id_reimbursment` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `description` text NOT NULL,
+  `foto` text NOT NULL,
+  `id_category` int(11) NOT NULL,
+  `cost` int(11) NOT NULL,
+  `reject_reason` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reimbursment`
+--
+
+INSERT INTO `reimbursment` (`id_reimbursment`, `employee_id`, `date`, `description`, `foto`, `id_category`, `cost`, `reject_reason`, `status`) VALUES
+(4, 12, '2019-02-26', 'Transport', 'IMG-27151409.png', 1, 150000, 'Ok', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reimbursment_category`
+--
+
+CREATE TABLE `reimbursment_category` (
+  `id` int(11) NOT NULL,
+  `category` varchar(25) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reimbursment_category`
+--
+
+INSERT INTO `reimbursment_category` (`id`, `category`, `status`) VALUES
+(1, 'Transportation', 1),
+(2, 'Foods', 1),
+(3, 'Medic', 1),
+(4, 'News', 0),
+(5, 'Hostelry', 1);
 
 -- --------------------------------------------------------
 
@@ -434,70 +537,29 @@ INSERT INTO `reports` (`report_id`, `report_employee`, `report_start`, `report_s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `salaries`
+-- Table structure for table `salary_detail`
 --
 
-CREATE TABLE `salaries` (
-  `salary_id` int(20) NOT NULL,
-  `salary_name` int(60) NOT NULL,
-  `salary_amount` int(50) NOT NULL,
-  `salary_duration` varchar(35) NOT NULL
+CREATE TABLE `salary_detail` (
+  `id_salary` int(11) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `id_allowance` varchar(12) DEFAULT NULL,
+  `year` year(4) NOT NULL,
+  `month` int(2) NOT NULL,
+  `date_release` date DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL,
+  `deduct_attendance` int(11) DEFAULT NULL,
+  `deduct_leave` int(11) DEFAULT NULL,
+  `total_allowance` int(11) DEFAULT NULL,
+  `total_salary` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `salaries`
+-- Dumping data for table `salary_detail`
 --
 
-INSERT INTO `salaries` (`salary_id`, `salary_name`, `salary_amount`, `salary_duration`) VALUES
-(24, 1, 0, 'Full Time'),
-(25, 2, 0, 'Full Time'),
-(26, 3, 0, 'Full Time'),
-(27, 4, 0, 'Full Time'),
-(28, 5, 0, 'Part Time'),
-(29, 6, 0, 'Part Time');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `salaries_full`
---
-
-CREATE TABLE `salaries_full` (
-  `salary_id` int(20) NOT NULL,
-  `salary_name` varchar(60) NOT NULL,
-  `salary_amount` int(50) NOT NULL,
-  `salary_duration` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `salaries_full`
---
-
-INSERT INTO `salaries_full` (`salary_id`, `salary_name`, `salary_amount`, `salary_duration`) VALUES
-(3, '1', 0, 'Full Time'),
-(8, '4', 0, ''),
-(9, '2', 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `salaries_part`
---
-
-CREATE TABLE `salaries_part` (
-  `salary_id` int(20) NOT NULL,
-  `salary_name` varchar(60) NOT NULL,
-  `salary_amount` int(50) NOT NULL,
-  `salary_duration` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `salaries_part`
---
-
-INSERT INTO `salaries_part` (`salary_id`, `salary_name`, `salary_amount`, `salary_duration`) VALUES
-(2, '5', 0, 'Part Time'),
-(4, '3', 0, '');
+INSERT INTO `salary_detail` (`id_salary`, `employee_id`, `id_allowance`, `year`, `month`, `date_release`, `salary`, `deduct_attendance`, `deduct_leave`, `total_allowance`, `total_salary`) VALUES
+(1, 16, 'ID-DB0P95L', 2019, 1, '2019-02-27', 120000, 0, 0, 68000, 188000);
 
 -- --------------------------------------------------------
 
@@ -520,10 +582,60 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `name`, `email`, `password`, `role`, `status`) VALUES
-(3, 'joni', 'Jhony Andrean', '', '91010ab2791f95fcd50d52d8b32f5c756438c411', 2, 1),
 (12, 'naka', 'Naka', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 1),
+(16, 'joni123', 'Joni', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 1),
 (9998, 'employer', 'Employer', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 3, 1),
 (9999, 'admin123', 'admin', 'admin@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_day`
+--
+
+CREATE TABLE `work_day` (
+  `id` int(11) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `work_day`
+--
+
+INSERT INTO `work_day` (`id`, `day`, `status`) VALUES
+(1, 'Monday', 1),
+(2, 'Tuesday', 1),
+(3, 'Wednesday', 1),
+(7, 'Thursday', 1),
+(8, 'Friday', 1),
+(9, 'Saturday', 0),
+(10, 'Sunday', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_day_part`
+--
+
+CREATE TABLE `work_day_part` (
+  `id` int(11) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `work_day_part`
+--
+
+INSERT INTO `work_day_part` (`id`, `day`, `status`) VALUES
+(1, 'Monday', 1),
+(2, 'Tuesday', 1),
+(3, 'Wednesday', 1),
+(4, 'Thursday', 1),
+(5, 'Friday', 1),
+(6, 'Saturday', 0),
+(7, 'Sunday', 0);
 
 --
 -- Indexes for dumped tables
@@ -533,7 +645,19 @@ INSERT INTO `users` (`user_id`, `username`, `name`, `email`, `password`, `role`,
 -- Indexes for table `allowances`
 --
 ALTER TABLE `allowances`
-  ADD PRIMARY KEY (`allowance_id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `allowances_master`
+--
+ALTER TABLE `allowances_master`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `allowance_allocated`
+--
+ALTER TABLE `allowance_allocated`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `attendances`
@@ -542,15 +666,9 @@ ALTER TABLE `attendances`
   ADD PRIMARY KEY (`attendance_id`);
 
 --
--- Indexes for table `attendances_full`
+-- Indexes for table `attendances_setting`
 --
-ALTER TABLE `attendances_full`
-  ADD PRIMARY KEY (`attendance_id`);
-
---
--- Indexes for table `attendances_part`
---
-ALTER TABLE `attendances_part`
+ALTER TABLE `attendances_setting`
   ADD PRIMARY KEY (`attendance_id`);
 
 --
@@ -570,6 +688,12 @@ ALTER TABLE `claims`
 --
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`employee_id`);
+
+--
+-- Indexes for table `holiday`
+--
+ALTER TABLE `holiday`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `leaves`
@@ -608,34 +732,46 @@ ALTER TABLE `privilage`
   ADD PRIMARY KEY (`privilage_id`);
 
 --
+-- Indexes for table `reimbursment`
+--
+ALTER TABLE `reimbursment`
+  ADD PRIMARY KEY (`id_reimbursment`);
+
+--
+-- Indexes for table `reimbursment_category`
+--
+ALTER TABLE `reimbursment_category`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`report_id`);
 
 --
--- Indexes for table `salaries`
+-- Indexes for table `salary_detail`
 --
-ALTER TABLE `salaries`
-  ADD PRIMARY KEY (`salary_id`);
-
---
--- Indexes for table `salaries_full`
---
-ALTER TABLE `salaries_full`
-  ADD PRIMARY KEY (`salary_id`);
-
---
--- Indexes for table `salaries_part`
---
-ALTER TABLE `salaries_part`
-  ADD PRIMARY KEY (`salary_id`);
+ALTER TABLE `salary_detail`
+  ADD PRIMARY KEY (`id_salary`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `work_day`
+--
+ALTER TABLE `work_day`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `work_day_part`
+--
+ALTER TABLE `work_day_part`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -645,111 +781,112 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `allowances`
 --
 ALTER TABLE `allowances`
-  MODIFY `allowance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `allowances_master`
+--
+ALTER TABLE `allowances_master`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `allowance_allocated`
+--
+ALTER TABLE `allowance_allocated`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `attendances_full`
+-- AUTO_INCREMENT for table `attendances_setting`
 --
-ALTER TABLE `attendances_full`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `attendances_part`
---
-ALTER TABLE `attendances_part`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+ALTER TABLE `attendances_setting`
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `bonuses`
 --
 ALTER TABLE `bonuses`
   MODIFY `bonus_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `claims`
 --
 ALTER TABLE `claims`
   MODIFY `claim_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+  MODIFY `employee_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `holiday`
+--
+ALTER TABLE `holiday`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `modul`
 --
 ALTER TABLE `modul`
   MODIFY `modul_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
   MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
   MODIFY `payment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `privilage`
 --
 ALTER TABLE `privilage`
-  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
+  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+--
+-- AUTO_INCREMENT for table `reimbursment`
+--
+ALTER TABLE `reimbursment`
+  MODIFY `id_reimbursment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `reimbursment_category`
+--
+ALTER TABLE `reimbursment_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
   MODIFY `report_id` int(35) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
--- AUTO_INCREMENT for table `salaries`
+-- AUTO_INCREMENT for table `salary_detail`
 --
-ALTER TABLE `salaries`
-  MODIFY `salary_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `salaries_full`
---
-ALTER TABLE `salaries_full`
-  MODIFY `salary_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `salaries_part`
---
-ALTER TABLE `salaries_part`
-  MODIFY `salary_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+ALTER TABLE `salary_detail`
+  MODIFY `id_salary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
-COMMIT;
-
+--
+-- AUTO_INCREMENT for table `work_day`
+--
+ALTER TABLE `work_day`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `work_day_part`
+--
+ALTER TABLE `work_day_part`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

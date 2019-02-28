@@ -112,9 +112,9 @@
                             <td><?php echo $data->leave_days; ?></td>
                             <td><?php echo $data->leave_status ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary" onclick="v_leave('<?php echo $data->leave_id ?>')">View</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="v_leave('<?php echo $data->leave_id ?>')">View</button>
                                 <?php if ($data->leave_status == "PENDING") { ?>
-                                    <button type="button" class="btn btn-danger" onclick="cancel('<?php echo $data->leave_id ?>')">Cancel</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="cancel('<?php echo $data->leave_id ?>')">Cancel</button>
                                 <?php } ?>
                                 
                             </td>                                    
