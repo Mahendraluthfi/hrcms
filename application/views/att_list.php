@@ -11,9 +11,18 @@
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-12">
+                <div class="col-8">
                   <h3 class="mb-0">Attendances List</h3>
-                </div>                
+                </div>           
+                <div class="col-4 text-right">
+                  <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">Generate QR <span class="caret"></span></button>       
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/shf/'.$shf) ?>" target="_blank">Start Hours/Full Time</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/ehf/'.$ehf) ?>" target="_blank">End Hours/Full TIme</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/shp/'.$shp) ?>" target="_blank">Start Hours/Part Time</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/ehp/'.$ehp) ?>" target="_blank">End Hours/Part TIme</a></li>
+                  </ul>
+                </div>     
               </div>
             </div>
             <div class="card-body">

@@ -6,18 +6,12 @@
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
   <title>Dashboard Admin HRCMS</title>
-  <!-- Favicon -->
-  <link href="<?php echo base_url() ?>asset/extra/assets/img/brand/NewLogo.png" rel="icon" type="image/png">
-  <!-- Fonts -->
+  <link href="<?php echo base_url() ?>asset/extra/assets/img/brand/NewLogo.png" rel="icon" type="image/png">  
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <!-- Icons -->
   <link href="<?php echo base_url() ?>asset/extra/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="<?php echo base_url() ?>asset/extra/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css">     -->
   <link rel="stylesheet" href="<?php echo base_url() ?>asset/vendor/bootstrap/css/bootstrap.css">    
-  <!-- Argon CSS -->
   <link type="text/css" href="<?php echo base_url() ?>asset/extra/assets/css/argon.css?v=1.0.0" rel="stylesheet">
-  <!-- font awesome -->
   <link rel="stylesheet" href="<?php echo base_url() ?>asset/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link href="<?php echo base_url() ?>asset/extra/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">    
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/libs/select2/dist/css/select2.min.css">
@@ -33,7 +27,6 @@
     #profile_pic {
         width: 100px;
     }
-
     #notifications {
       cursor: pointer;
       position: fixed;
@@ -187,13 +180,7 @@
     <!-- Top atas navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-        <!-- Akhir Top atas navbar -->
-
-        <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./index.html">Dashboard <?php echo $this->session->userdata('name'); ?></a>
-        <!-- Form -->
-        
-        <!-- User Admin-->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -210,22 +197,21 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome!</h6>
               </div>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-single-02"></i>
-                <span>My profile</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
-              </a>
+              <?php if ($this->session->userdata('level')=="1") { ?>
+                <a href="./examples/profile.html" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>
+                  <a href="./examples/profile.html" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>Setting</span>
+                </a>                        
+              <?php }else{ ?>
+                 <a href="<?php echo base_url('profile_emp') ?>" class="dropdown-item"> 
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>            
+              <?php } ?>
               <div class="dropdown-divider"></div>
               <a href="<?php echo base_url('login/logout') ?>" class="dropdown-item">
                 <i class="ni ni-user-run"></i>

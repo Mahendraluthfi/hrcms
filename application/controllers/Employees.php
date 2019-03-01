@@ -132,6 +132,8 @@ class Employees extends CI_Controller {
     			$data['employee_certificate'] = 'files/employee_pictures/'.$this->upload->file_name;
 			}
 			$message = 'update';
+			$this->db->where('user_id', $id);
+			$this->db->update('users', array('username' => $this->input->post('emp_username')));
 			$command = $this->EmployeeModel->updateData($data, $id);
 		} 
 		else {
