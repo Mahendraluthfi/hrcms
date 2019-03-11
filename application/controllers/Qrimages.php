@@ -19,7 +19,7 @@ class Qrimages extends CI_Controller {
 		// $config['black']		= array(224,255,255); // array, default is array(255,255,255)
 		// $config['white']		= array(70,130,180); // array, default is array(0,0,0)
 		// $this->ciqrcode->initialize($config);
-		$params['data'] = $text;
+		$params['data'] = 'test';
 		header("Content-Type: image/png");
 		$this->ciqrcode->generate($params);
 	}
