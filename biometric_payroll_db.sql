@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 28, 2019 at 01:14 PM
+-- Generation Time: Mar 13, 2019 at 10:26 AM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
--- PHP Version: 5.6.40-1+ubuntu18.04.1+deb.sury.org+1
+-- PHP Version: 5.6.40-5+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -42,7 +42,9 @@ INSERT INTO `allowances` (`id`, `id_allowance`, `allowance_name`, `nominal`) VAL
 (6, 'ID-5TU2AV3', 'BPJS', 25500),
 (7, 'ID-5TU2AV3', 'Fuel', 20000),
 (8, 'ID-5TU2AV3', 'Communication', 24500),
-(9, 'ID-5TU2AV3', 'Family', 90000);
+(9, 'ID-5TU2AV3', 'Family', 90000),
+(10, 'ID-OF0FJBO', 'BPJS', 25500),
+(11, 'ID-OF0FJBO', 'Fuel', 20000);
 
 -- --------------------------------------------------------
 
@@ -139,24 +141,23 @@ INSERT INTO `attendances_setting` (`attendance_id`, `attendance_name`, `start_ho
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bonuses`
+-- Table structure for table `bonus`
 --
 
-CREATE TABLE `bonuses` (
-  `bonus_id` int(20) NOT NULL,
-  `bonus_employee` int(20) NOT NULL,
-  `bonus_type` varchar(100) NOT NULL,
-  `bonus_amount` varchar(15) NOT NULL,
-  `bonus_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE `bonus` (
+  `bonus_id` int(11) NOT NULL,
+  `bonus_date` date NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `bonus_amount` int(11) NOT NULL,
+  `bonus_text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `bonuses`
+-- Dumping data for table `bonus`
 --
 
-INSERT INTO `bonuses` (`bonus_id`, `bonus_employee`, `bonus_type`, `bonus_amount`, `bonus_timestamp`) VALUES
-(2, 5, 'haha', '500000', '2018-12-20 04:22:27'),
-(5, 3, 'jj', '89', '2018-12-20 06:41:03');
+INSERT INTO `bonus` (`bonus_id`, `bonus_date`, `employee_id`, `bonus_amount`, `bonus_text`) VALUES
+(2, '2019-03-12', 12, 25000, 'Dummy');
 
 -- --------------------------------------------------------
 
@@ -672,9 +673,9 @@ ALTER TABLE `attendances_setting`
   ADD PRIMARY KEY (`attendance_id`);
 
 --
--- Indexes for table `bonuses`
+-- Indexes for table `bonus`
 --
-ALTER TABLE `bonuses`
+ALTER TABLE `bonus`
   ADD PRIMARY KEY (`bonus_id`);
 
 --
@@ -781,7 +782,7 @@ ALTER TABLE `work_day_part`
 -- AUTO_INCREMENT for table `allowances`
 --
 ALTER TABLE `allowances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `allowances_master`
 --
@@ -803,10 +804,10 @@ ALTER TABLE `attendances`
 ALTER TABLE `attendances_setting`
   MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `bonuses`
+-- AUTO_INCREMENT for table `bonus`
 --
-ALTER TABLE `bonuses`
-  MODIFY `bonus_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `bonus`
+  MODIFY `bonus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `claims`
 --
