@@ -29,7 +29,7 @@
                       <th scope="col">Name</th>
                       <th scope="col">Gender</th>
                       <th scope="col">Position</th>                                         
-                      <th scope="col">Duration of Work</th>
+                      <th scope="col">Employment Type</th>                      
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -41,7 +41,7 @@
                         <td><?php echo $data->employee_name; ?></td>
                         <td><?php echo $data->employee_gender; ?></td>
                         <td><?php echo $data->position_name; ?></td>                                           
-                        <td><?php echo $data->employee_duration; ?></td>
+                        <td><?php echo $data->attendance_name; ?></td>
                         <td><?php 
                           if($data->employee_status == '1') echo "<span style='color: green;'> Active </span>"; 
                           else {echo "<span style='color: red;'> Deactived </span>"; } ?>
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-md-4 text-right">Duration Of Work</label>
+                        <label class="control-label col-md-4 text-right">Employee Type</label>
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                             <p class="form-control-static" id="dow"></p>
                         </div>
@@ -249,7 +249,7 @@
             $("#status").text(data.employee_status);                               
             $("#gaji").text(data.employee_salary);                               
             $("#overtime").text(data.employee_overtime);                               
-            $("#dow").text(data.employee_duration);                               
+            $("#dow").text(data.attendance_name);                               
             $("#vql").text(data.employee_start_leave+ ' until ' +data.employee_end_leave);                               
             $("#vqo").text(data.employee_start_off+ ' until ' +data.employee_end_off);                               
             $("#vqs").text(data.employee_start_sick+ ' until ' +data.employee_end_sick);                               

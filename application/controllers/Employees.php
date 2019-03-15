@@ -186,7 +186,7 @@ class Employees extends CI_Controller {
 
 	public function get($id)
 	{
-		$data = $this->db->get_where('employees', array('employee_id' => $id))->row();
+		$data = $this->EmployeeModel->get_id($id)->row();
 		echo json_encode($data);
 	}
 

@@ -94,7 +94,7 @@
                             <div class="form-group row">
                                 <label for="lname" class="col-sm-3 text-right control-label col-form-label">Picture</label>
                                 <div class="col-sm-9">
-                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_picture);} ?>">
+                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_picture);} ?>" height="150">
                                     <div class="custom-file">
                                         <input type="file" class="emp_picture" id="validatedCustomFile" name="emp_picture" accept="image/*">
                                         <div class="invalid-feedback">Example invalid custom file feedback</div>
@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 <label for="lname" class="col-sm-3 text-right control-label col-form-label">ID Card Scan</label>
                                 <div class="col-sm-9">
-                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_idcard);} ?>">
+                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_idcard);} ?>" height="150">
                                     <div class="custom-file">
                                         <input type="file" class="emp_idcard" id="validatedCustomFile" name="emp_idcard" accept="image/*">
                                         <div class="invalid-feedback">Example invalid custom file feedback</div>
@@ -114,7 +114,7 @@
                             <div class="form-group row">
                                 <label for="lname" class="col-sm-3 text-right control-label col-form-label">Academic Certificate</label>
                                 <div class="col-sm-9">
-                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_certificate);} ?>">
+                                    <img id="" alt="" class="img-responsive radius" src="<?php if(is_numeric($this->uri->segment(3))) { echo base_url($value->employee_certificate);} ?>" height="150">
                                 	<div class="custom-file">
                                         <input type="file" class="emp_certificate" id="validatedCustomFile" name="emp_certificate" accept="image/*">
                                         <div class="invalid-feedback">Example invalid custom file feedback</div>

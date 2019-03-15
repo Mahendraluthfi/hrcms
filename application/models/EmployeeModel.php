@@ -9,9 +9,20 @@ class EmployeeModel extends CI_Model
 		$this->db->select('*');
 		$this->db->from('employees');
 		$this->db->join('positions', 'employees.employee_position = positions.position_id');
+		$this->db->join('attendances_type', 'attendances_type.id = employees.employee_duration');
 		$query = $this->db->get();
-
 		return $query->result();
+	}
+
+	public function get_id($id)
+	{
+		$this->db->select('*');
+		$this->db->from('employees');
+		$this->db->join('positions', 'employees.employee_position = positions.position_id');
+		$this->db->join('attendances_type', 'attendances_type.id = employees.employee_duration');
+		$this->db->where('employee_id', $id);
+		$query = $this->db->get();
+		return $query;	
 	}
 
 	public function insertData($data)

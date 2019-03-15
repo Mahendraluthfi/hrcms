@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 13, 2019 at 10:26 AM
+-- Generation Time: Mar 14, 2019 at 06:08 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 5.6.40-5+ubuntu18.04.1+deb.sury.org+1
 
@@ -245,13 +245,6 @@ CREATE TABLE `holiday` (
   `information` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `holiday`
---
-
-INSERT INTO `holiday` (`id`, `date`, `information`) VALUES
-(2, '2019-02-05', 'Chinese New Year');
-
 -- --------------------------------------------------------
 
 --
@@ -304,7 +297,6 @@ CREATE TABLE `modul` (
 --
 
 INSERT INTO `modul` (`modul_id`, `modul_span`, `modul_icon`, `modul_url`, `modul_parent`, `modul_level`, `modul_role`) VALUES
-(1, 'Payment', 'ni ni-money-coins text-red', 'payment', 0, 1, 1),
 (2, 'Leave Management', 'ni ni-user-run text-orange', 'leaves', 0, 0, 1),
 (3, 'Leaves', 'ni ni-calendar-grid-58', 'leave', 2, 2, 1),
 (4, 'Off', 'ni ni-calendar-grid-58', 'off', 2, 2, 1),
@@ -464,7 +456,12 @@ INSERT INTO `privilage` (`privilage_id`, `user_id`, `modul_id`) VALUES
 (41, 16, 31),
 (42, 16, 32),
 (43, 16, 33),
-(44, 16, 34);
+(44, 16, 34),
+(69, 0, 3),
+(70, 0, 4),
+(71, 0, 5),
+(72, 0, 2),
+(73, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -512,7 +509,8 @@ INSERT INTO `reimbursment_category` (`id`, `category`, `status`) VALUES
 (2, 'Foods', 1),
 (3, 'Medic', 1),
 (4, 'News', 0),
-(5, 'Hostelry', 1);
+(5, 'Hostelry', 1),
+(6, 'example', 0);
 
 -- --------------------------------------------------------
 
@@ -569,12 +567,13 @@ INSERT INTO `salary_detail` (`id_salary`, `employee_id`, `id_allowance`, `year`,
 --
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
+  `user_id` varchar(15) NOT NULL,
   `username` varchar(222) NOT NULL,
   `name` varchar(222) NOT NULL,
   `email` varchar(222) NOT NULL,
   `password` varchar(222) NOT NULL,
   `role` int(1) NOT NULL,
+  `level` int(11) NOT NULL,
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -582,11 +581,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `name`, `email`, `password`, `role`, `status`) VALUES
-(12, 'naka', 'Naka', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 1),
-(16, 'joni123', 'Joni', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 1),
-(9998, 'employer', 'Employer', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 3, 1),
-(9999, 'admin123', 'admin', 'admin@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 1);
+INSERT INTO `users` (`user_id`, `username`, `name`, `email`, `password`, `role`, `level`, `status`) VALUES
+('12', 'naka', 'Naka', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 3, 1),
+('16', 'joni123', 'Joni', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2, 3, 1),
+('9999', 'admin123', 'admin', 'admin@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 1, 1),
+('staff', 'staff', 'Aris Hujan', '', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -852,7 +851,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `privilage`
 --
 ALTER TABLE `privilage`
-  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT for table `reimbursment`
 --
@@ -862,7 +861,7 @@ ALTER TABLE `reimbursment`
 -- AUTO_INCREMENT for table `reimbursment_category`
 --
 ALTER TABLE `reimbursment_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `reports`
 --
@@ -873,11 +872,6 @@ ALTER TABLE `reports`
 --
 ALTER TABLE `salary_detail`
   MODIFY `id_salary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
 --
 -- AUTO_INCREMENT for table `work_day`
 --

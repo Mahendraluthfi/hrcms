@@ -27,7 +27,8 @@ class Login extends CI_Controller {
                     'iduser' => $key->user_id,
                     'username' => $key->username,                 
                     'name' => $key->name,                 
-                    'level' => $key->role                 
+                    'level' => $key->role,                
+                    'access' => $key->level                
                 );
                 $status = $key->status;
             }  

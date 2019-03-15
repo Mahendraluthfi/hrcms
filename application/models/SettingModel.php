@@ -7,7 +7,7 @@ class SettingModel extends CI_Model {
 		{
 			$this->db->select('*');
 			$this->db->from('users');
-			$this->db->where_not_in('role', '2');			
+			$this->db->where('level', '2');			
 			$db = $this->db->get();
 			return $db;
 		}	
@@ -21,7 +21,6 @@ class SettingModel extends CI_Model {
 			$db = $this->db->get();
 			return $db;
 		}	
-
 }
 
 /* End of file SettingModel.php */

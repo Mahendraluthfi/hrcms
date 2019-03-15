@@ -29,6 +29,7 @@
                         <th>Username</th>            
                         <th>Name</th>            
                         <th>Role</th>            
+                        <th>Status</th>            
                         <th width="15%">Action</th>
                     </tr>
                   </thead>
@@ -38,12 +39,18 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $value->username; ?></td>                                    
                             <td><?php echo $value->name; ?></td>
-                            <td><?php echo $value->role; ?></td>
+                            <td><?php echo 'Employer' ?></td>
+                            <td><?php if($value->status == '1'){ echo "Active"; }else{ echo "Inactive"; } ?></td>
                             <td>
-                            	
+                                  <a href="<?php echo base_url('setting/edit/'.$value->user_id) ?>" class="btn btn-success btn-sm">Edit</a>
+                              <?php if ($value->status == '1'){ ?>
+                                  <a href="<?php echo base_url('setting/status/0/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Inactive</a>
+                              <?php }else{ ?>
+                                  <a href="<?php echo base_url('setting/status/1/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Active</a>
+                              <?php } ?>
                             </td>
                         </tr>
-                            <?php $i++; } ?>
+                      <?php $i++; } ?>
                   </tbody>
                 </table>
               </div>                                   
