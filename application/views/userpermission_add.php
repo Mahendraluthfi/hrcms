@@ -12,55 +12,49 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Edit User</h3>
+                  <h3 class="mb-0">Add New User</h3>
                 </div> 
                 <div class="col-4 text-right">
-                  <a href="<?php echo base_url('setting') ?>" class="btn btn-primary btn-sm">Back</a>
+                  <a href="<?php echo base_url('userpermission') ?>" class="btn btn-primary btn-sm">Back</a>
                 </div>                  
               </div>
             </div>
             <div class="card-body">
             	<div class="row">
             		<div class="col-6">            			
-                <?php echo form_open('setting/save_edit'); ?>              
+                <?php echo form_open('userpermission/save'); ?>              
 			                <div class="form-group row">
 			                  <label class="col-sm-4 text-right control-label col-form-label">Username</label>
 			                  <div class="col-sm-8">
-			                      <input type="text" name="username" class="form-control disabled" placeholder="Username" disabled value="<?php echo $user->username ?>">
-                            <input type="hidden" name="id" value="<?php echo $id ?>">
+			                      <input type="text" name="username" class="form-control" placeholder="Username" required="">
 			                  </div>
 			                </div>    
 			                 <div class="form-group row">
 			                  <label class="col-sm-4 text-right control-label col-form-label">Name</label>
 			                  <div class="col-sm-8">
-			                      <input type="text" name="name" class="form-control" placeholder="Name" value="<?php echo $user->name ?>">               
+			                      <input type="text" name="name" class="form-control" placeholder="Name">               
 			                  </div>
 			                </div>                                                                                 
 			                <div class="form-group row">
 			                  <label class="col-sm-4 text-right control-label col-form-label">Password</label>
 			                  <div class="col-sm-8">
-			                      <input type="password" name="password" class="form-control" placeholder="Password">
+			                      <input type="password" name="password" class="form-control" placeholder="Password" required="">               
 			                  </div>
 			                </div>                                                                                 
 			                <div class="form-group row">
 			                  <label class="col-sm-4 text-right control-label col-form-label">Retype Password</label>
 			                  <div class="col-sm-8">
-			                      <input type="password" name="retype" class="form-control" placeholder="Password"><span id='message'></span>
+			                      <input type="password" name="retype" class="form-control" placeholder="Password" required=""><span id='message'></span>
 			                  </div>
-			                </div>                                                                                 	
+			                </div>                                                                                 			
             		</div>
             		<div class="col-6">  
             		<h4>Permissions Modul</h4> 
-            			<?php foreach ($role as $key) {                       
-                        $cek = $this->db->get_where('privilage', array('modul_id' => $key->modul_id, 'user_id' => $id))->num_rows();
-                  ?>            				
+            			<?php foreach ($role as $key) { ?>            				
         						<div class="custom-control custom-checkbox mb-3">
-        						  <input class="custom-control-input" id="<?php echo $key->modul_icon ?>" type="checkbox" name="cb[<?php echo $key->modul_id ?>]" <?php if ($cek > 0) {
-                        echo "checked";
-                      } ?>>
+        						  <input class="custom-control-input" id="<?php echo $key->modul_icon ?>" type="checkbox" name="cb[<?php echo $key->modul_id ?>]">
         						  <label class="custom-control-label" for="<?php echo $key->modul_icon ?>"><?php echo $key->modul_span ?></label>
-        						</div>
-                    
+        						</div>						
             			<?php } ?>
             		</div>
             	</div>
@@ -68,7 +62,7 @@
             </div>            
           </div>
         </div>
-            <?php echo form_close(); ?>
+                <?php echo form_close(); ?>
         <!-- Column -->
       </div>
       

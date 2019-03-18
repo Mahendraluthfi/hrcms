@@ -8,7 +8,8 @@ class SalaryModel extends CI_Model
 		$this->db->select('*');
 		$this->db->from('employees');
 		$this->db->join('positions', 'positions.position_id = employees.employee_position');
-		$this->db->where('employee_duration', 'Full Time');
+		$this->db->join('attendances_type', 'attendances_type.id = employees.employee_duration');
+		$this->db->where('employee_duration', '1');
 		$db = $this->db->get();
 		return $db;
 	}

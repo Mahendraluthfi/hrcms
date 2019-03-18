@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Setting extends CI_Controller {
+class Userpermission extends CI_Controller {
 
 	public function __construct()
 	{
@@ -13,29 +13,29 @@ class Setting extends CI_Controller {
 	    if ($this->session->userdata('access') > 1) {
 	    	redirect('login');
 	    }
-	    $this->load->model('SettingModel');
+	    $this->load->model('UserpermissionModel');
 	}
 
 	public function index()
 	{
-		$data['get'] = $this->SettingModel->get()->result();
-		$data['content'] = 'setting';
+		$data['get'] = $this->UserpermissionModel->get()->result();
+		$data['content'] = 'userpermission';
 		$this->load->view('index', $data);			
 	}
 
 	public function add()
 	{
-		$data['role'] = $this->SettingModel->get_role()->result();
-		$data['content'] = 'setting_add';
+		$data['role'] = $this->UserpermissionModel->get_role()->result();
+		$data['content'] = 'userpermission_add';
 		$this->load->view('index', $data);	
 	}
 
 	public function edit($id)
 	{
 		$data['user'] = $this->db->get_where('users', array('user_id' => $id))->row();
-		$data['role'] = $this->SettingModel->get_role()->result();
+		$data['role'] = $this->UserpermissionModel->get_role()->result();
 		$data['id'] = $id;
-		$data['content'] = 'setting_edit';
+		$data['content'] = 'userpermission_edit';
 		$this->load->view('index', $data);	
 	}
 
@@ -67,7 +67,7 @@ class Setting extends CI_Controller {
 				'modul_id' => $key
 			));
 		}
-		redirect('setting','refresh');
+		redirect('userpermission','refresh');
 	}
 
 	public function save_edit()
@@ -105,7 +105,7 @@ class Setting extends CI_Controller {
 				'modul_id' => $key
 			));
 		}
-		redirect('setting','refresh');
+		redirect('userpermission','refresh');
 	}
 
 	public function status($value,$id)
@@ -116,10 +116,10 @@ class Setting extends CI_Controller {
 	    	'<div class="alert alert-success" role="alert">
     			<strong>Done !
 			</div>');	 
-		redirect('setting','refresh');
+		redirect('userpermission','refresh');
 
 	}
 }
 
-/* End of file Setting.php */
+/* End of file userpermission.php */
 /* Location: ./application/controllers/Setting.php */

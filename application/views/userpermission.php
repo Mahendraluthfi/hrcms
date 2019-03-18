@@ -15,7 +15,7 @@
                   <h3 class="mb-0">Setting</h3>
                 </div> 
                 <div class="col-4 text-right">
-                  <a href="<?php echo base_url('setting/add') ?>" class="btn btn-primary btn-sm">Add New</a>
+                  <a href="<?php echo base_url('userpermission/add') ?>" class="btn btn-primary btn-sm">Add New</a>
                 </div>                  
               </div>
             </div>
@@ -42,11 +42,11 @@
                             <td><?php echo 'Employer' ?></td>
                             <td><?php if($value->status == '1'){ echo "Active"; }else{ echo "Inactive"; } ?></td>
                             <td>
-                                  <a href="<?php echo base_url('setting/edit/'.$value->user_id) ?>" class="btn btn-success btn-sm">Edit</a>
+                                  <a href="<?php echo base_url('userpermission/edit/'.$value->user_id) ?>" class="btn btn-success btn-sm">Edit</a>
                               <?php if ($value->status == '1'){ ?>
-                                  <a href="<?php echo base_url('setting/status/0/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Inactive</a>
+                                  <a href="<?php echo base_url('userpermission/status/0/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Inactive</a>
                               <?php }else{ ?>
-                                  <a href="<?php echo base_url('setting/status/1/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Active</a>
+                                  <a href="<?php echo base_url('userpermission/status/1/'.$value->user_id) ?>" class="btn btn-danger btn-sm">Active</a>
                               <?php } ?>
                             </td>
                         </tr>

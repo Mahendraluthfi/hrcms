@@ -15,13 +15,7 @@
                   <h3 class="mb-0">Attendances List</h3>
                 </div>           
                 <div class="col-4 text-right">
-                  <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">Generate QR <span class="caret"></span></button>       
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/shf/'.$shf) ?>" target="_blank">Start Hours/Full Time</a></li>
-                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/ehf/'.$ehf) ?>" target="_blank">End Hours/Full TIme</a></li>
-                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/shp/'.$shp) ?>" target="_blank">Start Hours/Part Time</a></li>
-                    <li><a class="dropdown-item" href="<?php echo base_url('att_list/view_qr/ehp/'.$ehp) ?>" target="_blank">End Hours/Part TIme</a></li>
-                  </ul>
+                  <a href="<?php echo base_url('att_list/view_qr') ?>" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-qrcode"></i> Sign QR Code</a>                
                 </div>     
               </div>
             </div>
@@ -32,7 +26,7 @@
                   	   <tr>
                             <th>No</th>
                             <th>Date</th>
-							<th>Name</th>
+							              <th>Name</th>
                             <th>Check In</th>
                             <th>Check Out</th>                                
                         </tr>

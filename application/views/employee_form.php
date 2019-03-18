@@ -73,7 +73,7 @@
 							<div class="form-group row">
                                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Gender</label>
                                 <div class="col-sm-3">
-                                    <select class="select2 form-control custom-select" style="width: 100%; height:36px;" name="emp_gender">
+                                    <select class="form-control custom-select" style="width: 100%; height:36px;" name="emp_gender">
                                         <option value="Women" <?php 
                                         if (is_numeric($this->uri->segment(3))) {
                                             if ($value->employee_gender == "Women") {echo "selected='selected'";}
@@ -124,7 +124,7 @@
                             <div class="form-group row">
                                 <label for="lname" class="col-sm-3 text-right control-label col-form-label">Position</label>
                                 <div class="col-sm-9">
-                                    <select class="select2 form-control custom-select" style="width: 100%; height:36px;" name="emp_position">
+                                    <select class="form-control custom-select" style="width: 100%; height:36px;" name="emp_position">
                                         <?php foreach ($positions as $position) { ?>
                                             <option value="<?php echo $position->position_id;?> " <?php if(is_numeric($this->uri->segment(3))) { 
                                                 if ($position->position_id == $value->employee_position) {
@@ -137,17 +137,13 @@
                                 </div>
                             </div>
 							<div class="form-group row">
-                                <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Duration of Work</label>
+                                <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Employment Type</label>
                                 <div class="col-sm-3">
-                                    <select class="select2 form-control custom-select" style="width: 100%; height:36px;" name="emp_duration">
-                                        <option value="Full Time" <?php 
-                                        if (is_numeric($this->uri->segment(3))) {
-                                            if ($value->employee_duration == "Full Time") {echo "selected='selected'";}
-                                        }?>>Full Time</option>
-                                        <option value="Part Time" <?php 
-                                        if (is_numeric($this->uri->segment(3))) {
-                                            if ($value->employee_duration == "Part Time") {echo "selected='selected'";}
-                                        }?>>Part Time</option>
+                                    <select class="form-control custom-select" style="width: 100%; height:36px;" name="emp_duration">
+                                      <?php foreach ($type as $datatype) { ?>
+                                          <option value="<?php echo $datatype->id ?>"><?php echo $datatype->attendance_name; ?></option>
+                                      <?php } ?>
+                                          <option value="0">Shift Time</option>                                      
                                     </select>
                                 </div>
                             </div>
@@ -166,7 +162,7 @@
                             <div class="form-group row">
                                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Status</label>
                                 <div class="col-sm-3">
-                                    <select class="select2 form-control custom-select" style="width: 100%; height:36px;" name="emp_status">
+                                    <select class="form-control custom-select" style="width: 100%; height:36px;" name="emp_status">
                                         <option value="1" <?php 
                                         if (is_numeric($this->uri->segment(3))) {
                                             if ($value->employee_status == 1) {echo "selected='selected'";}

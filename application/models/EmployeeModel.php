@@ -14,6 +14,13 @@ class EmployeeModel extends CI_Model
 		return $query->result();
 	}
 
+	public function get_type()
+	{
+		$this->db->where('attendance_type !=', 'SHIFT TIME');
+		$db = $this->db->get('attendances_type');
+		return $db;
+	}
+
 	public function get_id($id)
 	{
 		$this->db->select('*');

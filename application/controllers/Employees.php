@@ -29,18 +29,15 @@ class Employees extends CI_Controller {
 	}
 
 	public function employee_form($id='')
-	{		
-		// echo "string";
+	{				
 		if ($id != '') {
 			$data['value'] = $this->EmployeeModel->getDataWhere($id)->row();
 			$data['title'] = "Edit Employee";
-
 		} else {
 			$data['value'] = '';
 			$data['title'] = "Add New Employee";
-
 		}
-		
+		$data['type'] = $this->EmployeeModel->get_type()->result();
 		$data['positions'] = $this->PositionModel->getAllData();
 		$data['content'] = 'employee_form';
 		$this->load->view('index', $data);

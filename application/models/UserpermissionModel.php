@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class SettingModel extends CI_Model {
+class UserpermissionModel extends CI_Model {
 
 	public function get()
 		{

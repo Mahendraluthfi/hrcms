@@ -26,8 +26,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th scope="col">No</th>                      
-                      <th scope="col">Name</th>
-                      <th scope="col">Gender</th>
+                      <th scope="col">Name</th>                      
                       <th scope="col">Position</th>                                         
                       <th scope="col">Employment Type</th>                      
                       <th scope="col">Status</th>
@@ -38,9 +37,8 @@
                       <?php $i =1; foreach ($show as $data) { ?>
                       <tr>
                         <td><?php echo $i++; ?></td>                        
-                        <td><?php echo $data->employee_name; ?></td>
-                        <td><?php echo $data->employee_gender; ?></td>
-                        <td><?php echo $data->position_name; ?></td>                                           
+                        <td><?php echo $data->employee_name; ?></td>                        
+                        <td><?php echo $data->position_name; ?></td>
                         <td><?php echo $data->attendance_name; ?></td>
                         <td><?php 
                           if($data->employee_status == '1') echo "<span style='color: green;'> Active </span>"; 

@@ -46,27 +46,32 @@
           </div>
           <div class="modal-body">
               <?php echo form_open('att_setting/full_save'); ?>
-                  <div class="form-group">                    
-                      <label for="">Start Time</label>
-                      <div class="row">                       
-                      <div class="col-md-6 col-lg-6">
-                    <input type="number" min="0" max="23" class="form-control" name="sh1" placeholder="00" value="<?php echo substr($type->start_time, 0,2); ?>">
-                      </div>
-                      <div class="col-md-6 col-lg-6">
-                    <input type="number" min="00" max="59" class="form-control" name="sh2" placeholder="00" value="<?php echo substr($type->start_time, 3,2); ?>">
-                      </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="">End Time</label>
-                      <div class="row">                       
-                      <div class="col-md-6 col-lg-6">
-                    <input type="number" min="0" max="23" class="form-control" name="eh1" placeholder="00" value="<?php echo substr($type->end_time, 0,2); ?>">
-                      </div>
-                      <div class="col-md-6 col-lg-6">
-                    <input type="number" min="00" max="59" class="form-control" name="eh2" placeholder="00" value="<?php echo substr($type->end_time, 3,2); ?>">
-                      </div>
-                    </div>
+              <legend class="text-center">Full Time</legend>
+                  <div class="form-group row">                    
+                      <label for="fname" class="col-sm-3 control-label col-form-label">Start Time</label>
+                        <div class="col-sm-9">
+                           <input type="time" name="starttime" class="form-control" value="<?php echo $type->start_time ?>">
+                        </div>                                            
+                  </div>
+                  <div class="form-group row">                                      
+                      <label for="fname" class="col-sm-3 control-label col-form-label">End Time</label>
+                        <div class="col-sm-9">
+                           <input type="time" name="endtime" class="form-control" value="<?php echo $type->end_time ?>">
+                        </div>                                            
+                  </div>
+                  <legend class="text-center">Part Time</legend>
+                  <div class="form-group row">                    
+                      <label for="fname" class="col-sm-3 control-label col-form-label">Start Time</label>
+                        <div class="col-sm-9">
+                           <input type="time" name="starttimep" class="form-control" value="<?php echo $type2->start_time ?>">
+                        </div>                                            
+                  </div>
+                  <div class="form-group row">                                      
+                      <label for="fname" class="col-sm-3 control-label col-form-label">End Time</label>
+                        <div class="col-sm-9">
+                           <input type="time" name="endtimep" class="form-control" value="<?php echo $type2->end_time ?>">
+                        </div>                                            
+                  </div>                    
                     <div class="form-group">
                       <label for="">Tolerance (minute)</label>
                       <input type="number" class="form-control" name="tol" min="0" placeholder="minutes" value="<?php echo $wh->tolerance; ?>">
@@ -83,10 +88,10 @@
                           <input type="number" class="form-control" name="charge" min="0" placeholder="nominal" value="<?php echo $wh->charge; ?>">                                              
                         </div>
                         <label for="fname" class="col-sm-3 control-label col-form-label lpd"><h5>By <?php echo $wh->calculation; ?> minutes</h5></label>
-                    </div>                    
-                  </div>
+                    </div>                                      
           </div>
           <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>            
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>            
             </form>            
           </div>
@@ -114,6 +119,7 @@
                   <?php } ?>                   
           </div>
           <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>                        
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>            
             <?php echo form_close(); ?>  
           </div>
@@ -160,7 +166,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
           </div>
         </div>
       </div>
@@ -200,7 +206,7 @@
                       <td><?php echo $data2->end_time ?></td>                      
                       <td>
                         <button type="button" class="btn btn-primary btn-sm" onclick="edit('<?php echo $data2->id ?>')"><i class="fa fa-edit"></i> Edit</button>
-                        <a href="<?php echo base_url('att_setting/delete/') ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure ?')"><i class="fa fa-trash"></i> Delete</a>
+                        <a href="<?php echo base_url('att_setting/delete_shift/'.$data2->id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure ?')"><i class="fa fa-trash"></i> Delete</a>
                       </td>
                     </tr>
                   <?php } ?>
@@ -263,7 +269,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body form">
-                <?php echo form_open('att_setting/shift_save'); ?>
+                <form action="" method="post" id="formshift">
                     <div class="form-group row">
                       <label class="col-sm-3 text-right control-label col-form-label">Shift Name</label>
                       <div class="col-sm-9">
@@ -282,11 +288,11 @@
                           <input type="time" name="end" class="form-control">                          
                       </div>
                     </div>
+                </form>
             </div>
           <div class="modal-footer">     
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary" onclick="save_shift()">Save</button>
             <button type="button" class="btn btn-warning" id="close_shift">Close</button>
-          </form>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -306,12 +312,14 @@
 
 
 <script>
+  var save_method;
   function add() {
     $('#modal_view').modal('show'); // show bootstrap modal when complete loaded                            
     $('#setholidays').modal('hide'); // show bootstrap modal when complete loaded                            
   }
 
   function add_shift() {
+    save_method = 'add';
     $('#modal_shift').modal('show'); // show bootstrap modal when complete loaded                            
     $('#shiftime').modal('hide'); // show bootstrap modal when complete loaded                            
   }
@@ -326,10 +334,57 @@
     $('#shiftime').modal('show'); // show bootstrap modal when complete loaded                             
   });
 
-  function edit(id){
-    // console.log(id);
+  function edit(id)
+  {
+      save_method = 'update';
+      gid = id;
+      $('#formshift')[0].reset(); // reset form on modals
+      
+      $.ajax({
+        url : "<?php echo site_url('index.php/att_setting/get_shift')?>/" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {                        
+            $('[name="name"]').val(data.attendance_name);
+            $('[name="start"]').val(data.start_time);
+            $('[name="end"]').val(data.end_time);
+            $('#modal_shift').modal('show'); 
+            $('#shiftime').modal('hide'); 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
   }
   
+  function save_shift(){
+      var url;      
+      if(save_method == 'add'){
+          url = "<?php echo site_url('index.php/att_setting/shift_save')?>";          
+      }else{          
+          url = "<?php echo site_url('index.php/att_setting/shift_edit/')?>" + gid;         
+      }
+       // ajax adding data to database
+          $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#formshift').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+               //if success close modal and reload ajax table
+              $('#modal_shift').modal('hide');
+              location.reload();// for reload a page
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+            }
+        });
+      }   
+
   function save(){
       var url;            
       url = "<?php echo site_url('index.php/att_setting/holidate')?>";               
