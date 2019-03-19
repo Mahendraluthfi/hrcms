@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 14, 2019 at 06:08 PM
+-- Generation Time: Mar 19, 2019 at 10:04 AM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 5.6.40-5+ubuntu18.04.1+deb.sury.org+1
 
@@ -90,7 +90,13 @@ INSERT INTO `allowance_allocated` (`id`, `position_id`, `allowance_id`) VALUES
 (11, 7, 1),
 (12, 7, 2),
 (13, 7, 3),
-(14, 7, 4);
+(14, 7, 4),
+(15, 5, 1),
+(16, 5, 2),
+(17, 10, 1),
+(18, 10, 2),
+(19, 10, 3),
+(20, 10, 4);
 
 -- --------------------------------------------------------
 
@@ -122,9 +128,6 @@ INSERT INTO `attendances` (`attendance_id`, `attendance_employee`, `attendance_i
 
 CREATE TABLE `attendances_setting` (
   `attendance_id` int(11) NOT NULL,
-  `attendance_name` varchar(30) NOT NULL,
-  `start_hours` time NOT NULL,
-  `end_hours` time NOT NULL,
   `tolerance` int(11) NOT NULL,
   `calculation` int(11) NOT NULL,
   `charge` int(11) NOT NULL
@@ -134,9 +137,33 @@ CREATE TABLE `attendances_setting` (
 -- Dumping data for table `attendances_setting`
 --
 
-INSERT INTO `attendances_setting` (`attendance_id`, `attendance_name`, `start_hours`, `end_hours`, `tolerance`, `calculation`, `charge`) VALUES
-(1, 'Full Time', '08:00:00', '17:00:00', 5, 5, 2000),
-(2, 'Part Time', '09:00:00', '18:00:00', 10, 5, 2000);
+INSERT INTO `attendances_setting` (`attendance_id`, `tolerance`, `calculation`, `charge`) VALUES
+(1, 5, 5, 2000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances_type`
+--
+
+CREATE TABLE `attendances_type` (
+  `id` int(11) NOT NULL,
+  `attendance_name` varchar(32) NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `attendance_type` enum('FULL TIME','PART TIME','SHIFT TIME','') NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `attendances_type`
+--
+
+INSERT INTO `attendances_type` (`id`, `attendance_name`, `start_time`, `end_time`, `attendance_type`, `status`) VALUES
+(1, 'Full Time', '08:00:00', '17:45:00', 'FULL TIME', 1),
+(2, 'Part Time', '10:00:00', '18:45:00', 'PART TIME', 1),
+(3, 'Morning', '08:00:00', '14:00:00', 'SHIFT TIME', 1),
+(7, 'Night', '20:00:00', '05:00:00', 'SHIFT TIME', 0);
 
 -- --------------------------------------------------------
 
@@ -229,9 +256,9 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `employee_name`, `employee_username`, `employee_password`, `employee_picture`, `employee_position`, `employee_salary`, `employee_address`, `employee_idcard`, `employee_certificate`, `employee_birth`, `employee_gender`, `employee_start`, `employee_phone`, `employee_duration`, `employee_status`, `employee_timestamp`, `employee_start_leave`, `employee_end_leave`, `employee_start_off`, `employee_end_off`, `employee_start_sick`, `employee_end_sick`, `employee_leave`, `employee_off`, `employee_sick`, `employee_leave_rem`, `employee_off_rem`, `employee_sick_rem`, `employee_overtime`) VALUES
-(1, 'Andik2', 'andik', 'af0b3b52ec598673aeb96627ff8d024e670496da', 'files/employee_pictures/31dfea34977d9450906152c7eb357d00.jpg', 3, 2700000, 'ungaran2', 'files/employee_pictures/00acc4f9183db8d130dbc0149f7b897f.jpg', 'files/employee_pictures/09e61a66c66ad7890f83be8aae6c4889.jpg', '05/09/1990', 'Man', '11/13/2018', 5456560, 'Full Time', 1, '2019-02-27 10:02:52', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', 8, 0, 0, 8, 0, 0, 0),
-(12, 'Naka', 'naka', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 7, 2500000, 'Semarang', NULL, NULL, '08/26/1994', 'Man', '01/04/2019', 0, 'Full Time', 1, '2019-02-22 08:00:20', '2019-01-07', '2019-02-28', '2019-01-07', '2019-05-25', '2019-01-07', '2019-04-30', 7, 3, 4, -2, 1, 4, 0),
-(16, 'Joni', 'joni123', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 5, 120000, 'Semarang', NULL, NULL, '02/10/2009', 'Man', '01/04/2019', 851212, 'Part Time', 1, '2019-02-04 04:35:41', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-28', 1, 2, 3, 1, 2, 3, 1200);
+(1, 'Andik2', 'andik', 'af0b3b52ec598673aeb96627ff8d024e670496da', 'files/employee_pictures/31dfea34977d9450906152c7eb357d00.jpg', 3, 2700000, 'ungaran2', 'files/employee_pictures/00acc4f9183db8d130dbc0149f7b897f.jpg', 'files/employee_pictures/09e61a66c66ad7890f83be8aae6c4889.jpg', '05/09/1990', 'Man', '11/13/2018', 5456560, '1', 1, '2019-03-15 09:54:03', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', '0001-11-30', 8, 0, 0, 8, 0, 0, 0),
+(12, 'Naka', 'naka', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 7, 2500000, 'Semarang', NULL, NULL, '08/26/1994', 'Man', '01/04/2019', 0, '1', 1, '2019-03-15 09:54:06', '2019-01-07', '2019-02-28', '2019-01-07', '2019-05-25', '2019-01-07', '2019-04-30', 7, 3, 4, -2, 1, 4, 0),
+(16, 'Joni', 'joni123', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 5, 120000, 'Semarang', NULL, NULL, '02/10/2009', 'Man', '01/04/2019', 851212, '1', 1, '2019-03-15 09:54:08', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-23', '2019-01-23', '2019-02-28', 1, 2, 3, 1, 2, 3, 1200);
 
 -- --------------------------------------------------------
 
@@ -244,6 +271,13 @@ CREATE TABLE `holiday` (
   `date` date NOT NULL,
   `information` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `holiday`
+--
+
+INSERT INTO `holiday` (`id`, `date`, `information`) VALUES
+(1, '2019-04-19', 'Oke');
 
 -- --------------------------------------------------------
 
@@ -273,7 +307,7 @@ CREATE TABLE `leaves` (
 
 INSERT INTO `leaves` (`leave_id`, `leave_employee`, `leave_category`, `leave_message`, `leave_reply_message`, `leave_date_start`, `leave_date_end`, `leave_days`, `leave_status`, `leave_attachment`, `leave_timestamp`, `action_timestamp`, `leave_deducted`) VALUES
 (4, 12, '1', '', '', '2019-02-25', '2019-02-28', 4, 'APPROVED', '', '2019-02-22 15:00:06', '2019-02-22 15:00:20', 2),
-(5, 16, '2', 'Family Interest', '', '2019-02-27', '2019-02-27', 1, 'PENDING', '', '2019-02-27 16:59:30', '0000-00-00 00:00:00', 0),
+(5, 16, '2', 'Family Interest', '', '2019-02-27', '2019-02-27', 1, 'EXPIRED', '', '2019-02-27 16:59:30', '2019-03-01 00:00:00', 0),
 (6, 16, '3', 'Headache', '', '2019-03-01', '2019-03-01', 1, 'PENDING', '', '2019-02-27 17:00:52', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
@@ -311,10 +345,10 @@ INSERT INTO `modul` (`modul_id`, `modul_span`, `modul_icon`, `modul_url`, `modul
 (14, 'Part Time', 'ni ni-planet text-blue', 'salary_part', 12, 2, 1),
 (15, 'Bonus', 'ni ni-fat-add text-primary', 'bonus', 0, 1, 1),
 (16, 'Report', 'ni ni-time-alarm text-info', 'report', 0, 1, 1),
-(17, 'Data Manage', 'fa fa-database text-orange', 'data', 0, 0, 1),
+(17, 'User Management', 'fa fa-database text-orange', 'data', 0, 0, 1),
 (18, 'Job Positions', 'ni ni-planet text-blue', 'position', 17, 2, 1),
-(19, 'Allowances', 'ni ni-planet text-blue', 'allowances', 17, 2, 1),
-(20, 'User Admin', 'ni ni-planet text-blue', 'useradmin', 17, 2, 1),
+(19, 'Allowances', 'ni ni-planet text-blue', 'allowances', 12, 2, 1),
+(20, 'User Permissions', 'ni ni-planet text-blue', 'userpermission', 17, 2, 1),
 (21, 'News', 'fas fa-newspaper text-pink', 'news', 0, 1, 1),
 (22, 'Welfare', 'fa fa-handshake text-gray-dark', 'welfare', 0, 0, 1),
 (23, 'Polls', 'ni ni-chart-bar-32 text-blue', 'polls', 22, 2, 1),
@@ -457,11 +491,12 @@ INSERT INTO `privilage` (`privilage_id`, `user_id`, `modul_id`) VALUES
 (42, 16, 32),
 (43, 16, 33),
 (44, 16, 34),
-(69, 0, 3),
-(70, 0, 4),
-(71, 0, 5),
-(72, 0, 2),
-(73, 0, 6);
+(74, 0, 3),
+(75, 0, 4),
+(76, 0, 5),
+(77, 0, 2),
+(78, 0, 6),
+(79, 0, 7);
 
 -- --------------------------------------------------------
 
@@ -672,6 +707,12 @@ ALTER TABLE `attendances_setting`
   ADD PRIMARY KEY (`attendance_id`);
 
 --
+-- Indexes for table `attendances_type`
+--
+ALTER TABLE `attendances_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `bonus`
 --
 ALTER TABLE `bonus`
@@ -791,7 +832,7 @@ ALTER TABLE `allowances_master`
 -- AUTO_INCREMENT for table `allowance_allocated`
 --
 ALTER TABLE `allowance_allocated`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `attendances`
 --
@@ -801,7 +842,12 @@ ALTER TABLE `attendances`
 -- AUTO_INCREMENT for table `attendances_setting`
 --
 ALTER TABLE `attendances_setting`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `attendances_type`
+--
+ALTER TABLE `attendances_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `bonus`
 --
@@ -821,7 +867,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `holiday`
 --
 ALTER TABLE `holiday`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `leaves`
 --
@@ -851,7 +897,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `privilage`
 --
 ALTER TABLE `privilage`
-  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `privilage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 --
 -- AUTO_INCREMENT for table `reimbursment`
 --
